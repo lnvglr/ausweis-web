@@ -1,0 +1,24 @@
+/**
+ * SF Symbols (monochrome) via sf-symbols-lib — pairs with SF Pro on Apple platforms.
+ * Direct per-icon imports keep the bundle tree-shakeable.
+ */
+export { SFWave3RightCircleFill } from 'sf-symbols-lib/monochrome/SFWave3RightCircleFill'
+export { SFWave3Right } from 'sf-symbols-lib/monochrome/SFWave3Right'
+export { SFBuilding2 } from 'sf-symbols-lib/monochrome/SFBuilding2'
+export { SFBuildingColumns } from 'sf-symbols-lib/monochrome/SFBuildingColumns'
+export { SFCheckmark } from 'sf-symbols-lib/monochrome/SFCheckmark'
+export { SFCheckmarkShieldFill } from 'sf-symbols-lib/monochrome/SFCheckmarkShieldFill'
+export { SFChevronBackward } from 'sf-symbols-lib/monochrome/SFChevronBackward'
+export { SFChevronDown } from 'sf-symbols-lib/monochrome/SFChevronDown'
+export { SFChevronRight } from 'sf-symbols-lib/monochrome/SFChevronRight'
+export { SFCreditcard } from 'sf-symbols-lib/monochrome/SFCreditcard'
+export { SFDeleteLeft } from 'sf-symbols-lib/monochrome/SFDeleteLeft'
+export { SFEllipsisRectangle } from 'sf-symbols-lib/monochrome/SFEllipsisRectangle'
+export { SFGearshapeFill } from 'sf-symbols-lib/monochrome/SFGearshapeFill'
+export { SFInfoCircle } from 'sf-symbols-lib/monochrome/SFInfoCircle'
+export { SFIphone } from 'sf-symbols-lib/monochrome/SFIphone'
+export { SFLockFill } from 'sf-symbols-lib/monochrome/SFLockFill'
+export { SFMacbook } from 'sf-symbols-lib/monochrome/SFMacbook'
+export { SFNosign } from 'sf-symbols-lib/monochrome/SFNosign'
+export { SFPersonBadgeKeyFill } from 'sf-symbols-lib/monochrome/SFPersonBadgeKeyFill'
+export { SFXmark } from 'sf-symbols-lib/monochrome/SFXmark'

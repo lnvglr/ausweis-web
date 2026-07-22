@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --color-ios-blue: #007aff;
+  --color-ios-blue-pressed: #0066d6;
+  --color-ios-primary: #007aff;
+  --color-ios-primary-pressed: #0066d6;
+  --color-ios-green: #34c759;
+  --color-ios-red: #ff3b30;
+  --color-ios-orange: #ff9500;
+  --color-ios-gray: #8e8e93;
+  --color-ios-gray2: #aeaeb2;
+  --color-ios-gray3: #c7c7cc;
+  --color-ios-gray4: #d1d1d6;
+  --color-ios-gray5: #e5e5ea;
+  --color-ios-gray6: #f2f2f7;
+  --color-ios-label: #000000;
+  --color-ios-secondary-label: rgba(60, 60, 67, 0.6);
+  --color-ios-tertiary-label: rgba(60, 60, 67, 0.3);
+  --color-ios-separator: rgba(60, 60, 67, 0.12);
+  --color-ios-fill: rgba(120, 120, 128, 0.16);
+  --color-ios-grouped: #f2f2f7;
+  --color-ios-card: #ffffff;
+
+  --radius-ios-sm: 8px;
+  /* UITableView insetGrouped section corner radius:
+     iOS 13–18: 10pt; iOS 26+: 26pt (system default). */
+  --radius-ios-grouped: 26px;
+  --radius-ios: 10px;
+  --radius-ios-lg: 12px;
+  --radius-ios-xl: 16px;
+  --radius-ios-sheet: 44px;
+  /* Secondary control surfaces (code boxes, small tiles). */
+  --radius-ios-control: 12px;
+  /* HIG layout margins — use with px-4 / mt-8 in components. */
+  --ios-margin: 16px;
+  --ios-section-gap: 32px;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #0b0b0f;
+  color: var(--color-ios-label);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  letter-spacing: -0.01em;
+}
+
+/* Slightly tighter tracking on headlines */
+h1,
+h2,
+h3,
+.headline {
+  letter-spacing: -0.035em;
+}
+
+@keyframes nfc-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+@keyframes nfc-wave {
+  0% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes pin-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-nfc-pulse {
+  animation: nfc-pulse 1.8s ease-out infinite;
+}
+
+.animate-nfc-wave {
+  animation: nfc-wave 2s ease-in-out infinite;
+}
+
+.animate-pin-pop {
+  animation: pin-pop 0.18s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nfc-pulse,
+  .animate-nfc-wave,
+  .animate-pin-pop {
+    animation: none;
+  }
+}
+
+.safe-top {
+  /* Floor clears status bar / Dynamic Island when env(safe-area) is 0 (desktop frame). */
+  padding-top: max(24px, env(safe-area-inset-top));
+}
+
+@media (min-width: 640px) {
+  .safe-top {
+    /* AppShell fake island: top-2 (8px) + 28px height + breathing room */
+    padding-top: max(54px, env(safe-area-inset-top));
+  }
+}
+
+.safe-bottom {
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+
+/* iOS 26 Liquid Glass — chrome / controls layer */
+.ios-glass {
+  background:
+    linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.42) 48%,
+      rgba(245, 245, 247, 0.55) 100%
+    );
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.ios-glass-prominent {
+  background: var(--color-ios-primary);
+  border: none;
+  box-shadow: none;
+  color: #fff;
+}
+
+.ios-glass-prominent:active {
+  background: var(--color-ios-primary-pressed);
+}
+
+.ios-glass-tint {
+  background:
+    linear-gradient(
+      155deg,
+      rgba(0, 122, 255, 0.18) 0%,
+      rgba(0, 122, 255, 0.1) 100%
+    );
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 0.5px solid rgba(0, 122, 255, 0.18);
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.45),
+    0 4px 16px rgba(0, 122, 255, 0.08);
+  color: var(--color-ios-primary);
+}
