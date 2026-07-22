@@ -17,7 +17,7 @@ export function GroupedList({
 }: {
   children: React.ReactNode
   header?: string
-  footer?: string
+  footer?: React.ReactNode
   className?: string
   /**
    * Align separators with row text after leading icons.
@@ -104,7 +104,7 @@ export function ListRow({
       <div className="min-w-0 flex-1">
         <div
           className={cn(
-            'text-[17px] leading-[22px] tracking-[-0.41px]',
+            'text-[17px] leading-[22px] tracking-[-0.2px]',
             topAligned ? 'font-medium' : 'font-normal',
             destructive ? 'text-ios-red' : 'text-ios-label',
           )}
@@ -126,7 +126,7 @@ export function ListRow({
       {chevron ? (
         <SFChevronRight
           size={14}
-          className="shrink-0 text-[#c7c7cc]"
+          className="shrink-0 text-ios-gray3"
           aria-hidden
         />
       ) : null}

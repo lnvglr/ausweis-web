@@ -60,7 +60,7 @@ export function AppShell() {
           >
             <div
               className={cn(
-                'relative m-[3px] flex min-h-0 flex-1 flex-col overflow-hidden bg-ios-grouped',
+                'relative m-[3px] flex min-h-0 flex-1 flex-col overflow-hidden bg-ios-grouped text-ios-label',
                 'rounded-[calc(var(--iphone-17-radius)-3px)]',
                 isDark && 'dark',
               )}

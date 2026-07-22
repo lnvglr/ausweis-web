@@ -108,8 +108,18 @@ export function PinInfoPage({ onBack }: Props) {
 
           <GroupedList
             header={t('pinInfoPrivacy')}
-            footer={t('pinInfoNoStorage')}
-            className="mt-6"
+            footer={
+              <>
+                {t('pinInfoNoStorage')}{' '}
+                <Link
+                  to={routes.privacy}
+                  className="text-ios-primary active:opacity-60"
+                >
+                  {t('identifyPrivacyLink')}
+                </Link>
+              </>
+            }
+            className="mt-6 mb-8"
             iconInset="symbol"
           >
             <ListRow
@@ -123,15 +133,6 @@ export function PinInfoPage({ onBack }: Props) {
               subtitle={t('pinInfoProcessorRole')}
             />
           </GroupedList>
-
-          <div className="px-4 pt-2 pb-8">
-            <Link
-              to={routes.privacy}
-              className="inline-flex min-h-11 items-center text-[17px] font-medium tracking-[-0.41px] text-ios-primary active:opacity-60"
-            >
-              {t('identifyPrivacyLink')}
-            </Link>
-          </div>
         </div>
 
         <StickyActions>

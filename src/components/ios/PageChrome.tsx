@@ -85,7 +85,7 @@ export function StatusScreen({
   return (
     <div
       className={cn(
-        'flex flex-1 flex-col items-center px-4 pt-14 text-center',
+        'flex min-h-0 flex-1 flex-col items-center justify-center px-4 text-center text-ios-label',
         className,
       )}
     >

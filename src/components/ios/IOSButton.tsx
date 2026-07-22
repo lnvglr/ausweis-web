@@ -32,7 +32,7 @@ export function IOSButton({
       transition={iosSpring.press}
       className={cn(
         'inline-flex h-[50px] min-h-11 w-full items-center justify-center rounded-full px-5',
-        'text-[17px] font-medium leading-[22px] tracking-[-0.41px] disabled:opacity-40',
+        'text-[17px] font-medium leading-[22px] tracking-[-0.2px] disabled:opacity-40',
         variant === 'primary' &&
           'bg-ios-primary text-white active:bg-ios-primary-pressed',
         variant === 'tinted' && 'bg-ios-primary/12 text-ios-primary',

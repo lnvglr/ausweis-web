@@ -297,7 +297,7 @@ export function ChangePinSettingsPage() {
             </p>
             <h2
               className={cn(
-                'headline mt-2 min-h-[22px] max-w-[300px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
+                'headline mt-2 min-h-[22px] max-w-[300px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.2px]',
                 error ? 'text-ios-red' : 'text-ios-label',
               )}
             >

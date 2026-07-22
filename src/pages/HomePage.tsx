@@ -85,7 +85,7 @@ export function HomePage() {
                   </span>
                 ) : null}
               </div>
-              <h2 className="headline mt-3 text-[26px] font-bold leading-[31px]">
+              <h2 className="headline mt-3 text-[26px] font-bold leading-[31px] text-white">
                 {pendingDefinition
                   ? t(pendingDefinition.homeTitle)
                   : t('homeIdentify')}
@@ -100,7 +100,7 @@ export function HomePage() {
                   <p className="text-[12px] text-white/55">
                     {t('identifyProvider')}
                   </p>
-                  <p className="text-[15px] font-semibold">
+                  <p className="text-[15px] font-semibold text-white">
                     {pendingDefinition
                       ? t(pendingDefinition.providerName)
                       : t('identifyProviderName')}

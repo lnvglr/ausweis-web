@@ -67,7 +67,7 @@ export function DemoControls() {
       ) : null}
 
       {showPin ? (
-        <p className="pointer-events-none px-1 text-[12px] leading-snug text-white/45">
+        <p className="pointer-events-none text-[12px] leading-snug text-ios-blue bg-ios-blue/20 rounded-2xl border border-ios-blue/50 px-4 py-3">
           {pinHint}
         </p>
       ) : null}

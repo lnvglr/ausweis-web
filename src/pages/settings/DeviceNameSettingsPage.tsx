@@ -26,7 +26,7 @@ export function DeviceNameSettingsPage() {
           <input
             value={deviceName}
             onChange={(e) => setDeviceName(e.target.value.slice(0, 32))}
-            className="w-full bg-transparent px-4 py-[14px] text-[17px] leading-[22px] tracking-[-0.41px] text-ios-label outline-none"
+            className="w-full bg-transparent px-4 py-[14px] text-[17px] leading-[22px] tracking-[-0.2px] text-ios-label outline-none"
             autoFocus
             autoCapitalize="words"
           />

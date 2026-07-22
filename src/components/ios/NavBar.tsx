@@ -31,7 +31,7 @@ export function NavBar({
         </div>
         <div className="pointer-events-none absolute inset-x-0 flex justify-center px-16">
           {title && !largeTitle ? (
-            <h1 className="truncate text-[17px] font-semibold leading-[22px] tracking-[-0.41px] text-ios-label">
+            <h1 className="truncate text-[17px] font-semibold leading-[22px] tracking-[-0.2px] text-ios-label">
               {title}
             </h1>
           ) : null}

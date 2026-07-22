@@ -67,7 +67,7 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
           <div className="flex w-full flex-col items-center">
             <h2
               className={cn(
-                'headline max-w-[280px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
+                'headline max-w-[280px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.2px]',
                 pinError ? 'text-ios-red' : 'text-ios-label',
               )}
             >
@@ -103,7 +103,7 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
           <button
             type="button"
             onClick={() => setShowHelp(true)}
-            className="flex min-h-11 items-center px-4 text-[17px] font-normal leading-[22px] tracking-[-0.41px] text-ios-label active:opacity-50"
+            className="flex min-h-11 items-center px-4 text-[17px] font-normal leading-[22px] tracking-[-0.2px] text-ios-label active:opacity-50"
           >
             {t('pinWhatIs')}
           </button>

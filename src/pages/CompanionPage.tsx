@@ -157,7 +157,7 @@ export function CompanionPage() {
           </p>
         </div>
 
-        <div className="mt-auto flex flex-col items-center gap-5 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-10">
+        <div className="mt-auto flex flex-col items-center gap-5 px-4 pb-[max(48px,env(safe-area-inset-bottom))] pt-10">
           <IOSButton variant="primary" onClick={goBack}>
             {t('companionCancelPairing')}
           </IOSButton>

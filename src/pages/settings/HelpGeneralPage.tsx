@@ -67,7 +67,7 @@ export function HelpGeneralPage() {
                   className="flex w-full items-center justify-between gap-3 px-4 py-[11px] text-left active:bg-ios-fill/50"
                   onClick={() => setOpenFaq(isOpen ? null : q)}
                 >
-                  <span className="text-[17px] leading-[22px] tracking-[-0.41px] text-ios-label">
+                  <span className="text-[17px] leading-[22px] tracking-[-0.2px] text-ios-label">
                     {t(q)}
                   </span>
                   <SFChevronDown
