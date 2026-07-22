@@ -56,8 +56,6 @@ Demo Transport-PIN: `12345`
 | Icons | [sf-symbols-lib](https://github.com/phranck/sf-symbols-lib) (SF Symbols as React components) |
 | Lint | [oxlint](https://oxc.rs/) |
 
-Also listed in `package.json`: [lucide-react](https://lucide.dev/) (available; primary UI icons use SF Symbols via `sf-symbols-lib`).
-
 ## License
 
 This repository is licensed under the **[MIT License](LICENSE)** — free to use, modify, and redistribute.
