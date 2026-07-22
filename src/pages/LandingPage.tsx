@@ -52,7 +52,6 @@ export function LandingPage() {
       </header>
 
       <main id="top" className="relative z-10">
-        {/* Hero — brand first; thesis as the supporting line */}
         <section className="relative mx-auto grid min-h-[calc(100svh-4.5rem)] w-full max-w-6xl items-end gap-10 px-5 pb-10 pt-6 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:pb-16 lg:pt-4">
           <motion.div
             className="relative z-10 max-w-xl pb-2 lg:pb-8"
@@ -77,10 +76,11 @@ export function LandingPage() {
             <motion.p
               variants={fades}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 max-w-md text-[clamp(1.15rem,2.4vw,1.45rem)] font-medium leading-snug tracking-[-0.02em] text-white/90"
+              className="mt-5 max-w-md text-[clamp(1.1rem,2.2vw,1.35rem)] font-medium leading-snug tracking-[-0.02em] text-white/85"
             >
-              An authenticator people trust should feel native — not like a
-              compromise.
+              A flat, iOS-aligned web prototype of the German online ID flows —
+              built because the current app’s interface does not meet the bar
+              for something this sensitive.
             </motion.p>
             <motion.div
               variants={fades}
@@ -99,7 +99,7 @@ export function LandingPage() {
                 rel="noreferrer"
                 target="_blank"
               >
-                View source
+                Source
               </a>
             </motion.div>
           </motion.div>
@@ -143,71 +143,69 @@ export function LandingPage() {
           </motion.div>
         </section>
 
-        {/* Why this exists */}
         <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-3xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
-              Why this prototype exists
+              Motivation
             </h2>
             <div className="mt-6 space-y-5 text-[16px] leading-relaxed text-white/55 sm:text-[17px]">
               <p>
-                Germany’s online ID flow asks people to hand over something
-                sensitive. The current AusweisApp experience does not match that
-                stakes: the interface feels dated, uneven, and neither properly
-                iOS-native nor grounded in basic product design craft —
-                hierarchy, spacing, feedback, and clarity.
+                eID authentication is a high-trust interaction. The shipping
+                AusweisApp UI and UX do not reflect that: the interface feels
+                inconsistent and dated. It does not follow iOS Human Interface
+                conventions in a disciplined way, and it also falls short of
+                general design basics — clear hierarchy, consistent spacing,
+                alignment, and immediate feedback.
               </p>
               <p>
-                When an authenticator looks improvised, trust erodes before the
-                first NFC tap. Professional software for identity should read as
-                intentional: aligned layouts, system-familiar patterns, and
-                interactions that stay snappy and quiet under pressure.
+                Software that asks for a PIN and an ID card should look and
+                behave like solid system software: familiar patterns, restrained
+                motion, and layouts that stay orderly. Visual polish is not
+                decoration here; it is part of how credibility is communicated.
               </p>
               <p>
-                This unofficial proposal is a concrete alternative — the same
-                core flows, rebuilt as a flat, iOS-aligned web prototype so the
-                difference can be judged hands-on.
+                This repository is an independent redesign proposal. It keeps
+                the same core flows and reimplements them as a browser prototype
+                so the interaction design can be inspected directly.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Design bar the prototype aims for */}
         <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
-              The bar for identity software
+              Design criteria
             </h2>
             <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
-              Not a feature list — the qualities this redesign treats as
-              non-negotiable if eID is going to feel safe to use.
+              Assumptions this prototype is built against.
             </p>
 
             <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  title: 'Native on iOS',
-                  body: 'Navigation, chrome, and controls follow platform conventions so the app feels like it belongs on the phone — not a port of a generic form.',
+                  title: 'Platform literacy',
+                  body: 'Navigation, sheets, lists, and controls follow iOS patterns so the app reads as native rather than a generic web form.',
                 },
                 {
-                  title: 'Craft over chrome',
-                  body: 'Spacing, type, and alignment do quiet work. Nothing fights for attention except the step you are on.',
+                  title: 'Layout discipline',
+                  body: 'Type, spacing, and alignment are treated as constraints. Screens stay quiet so the current step remains obvious.',
                 },
                 {
-                  title: 'Snappy interaction',
-                  body: 'Transitions and taps stay short and decisive. Friction belongs in security checks, not in the UI responding to you.',
+                  title: 'Responsive interaction',
+                  body: 'Transitions are short; taps resolve quickly. Latency in the UI should not add to the cognitive load of authentication.',
                 },
                 {
-                  title: 'Readable under stress',
-                  body: 'Consent, PIN, and NFC moments stay calm and scannable when people are already slightly on edge.',
+                  title: 'Clarity under load',
+                  body: 'Consent, PIN entry, and NFC prompts stay scannable. Copy and structure aim for low ambiguity.',
                 },
                 {
-                  title: 'One job per screen',
-                  body: 'Identify, pair, change PIN, check the device — each flow has a clear path without secondary clutter.',
+                  title: 'Narrow scope per screen',
+                  body: 'Identify, pairing, PIN change, and device check each get a focused path without secondary noise.',
                 },
                 {
-                  title: 'Honest about trust',
-                  body: 'An authenticator earns confidence when it looks finished. This prototype argues that polish is part of security UX.',
+                  title: 'Presentation as signal',
+                  body: 'For authenticators, an unfinished-looking UI is a trust problem. The prototype treats finish quality as part of the UX.',
                 },
               ].map((item) => (
                 <li key={item.title} className="border-t border-white/10 pt-5">
@@ -223,43 +221,41 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* What the prototype covers — still tied to the why */}
         <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
-              Same flows, higher craft
+              Scope
             </h2>
             <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
-              The official product’s jobs stay intact. The redesign reworks how
-              those jobs are presented — so you can compare density, motion, and
-              clarity, not invent a different product.
+              Same functional jobs as the official app; different presentation.
+              No real eID, NFC hardware, or personal data.
             </p>
 
             <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
                   title: 'Identify online',
-                  body: 'Consent → NFC sheet → card PIN → success, with a quieter hierarchy and clearer provider context.',
+                  body: 'Provider consent, NFC sheet, card PIN, success.',
                 },
                 {
                   title: 'Phone as card reader',
-                  body: 'Pairing for Mac and standby for scans, without burying the status of the connection.',
+                  body: 'Mac pairing code and standby for remote scan requests.',
                 },
                 {
                   title: 'Change PIN',
-                  body: 'Choose 6-digit, Transport-PIN, or no PIN before entry — decisions before digits.',
+                  body: 'Select 6-digit, Transport-PIN, or no PIN, then enter.',
                 },
                 {
                   title: 'Device & ID check',
-                  body: 'A focused NFC check that the phone and card can talk — feedback you can actually read.',
+                  body: 'Simulated NFC check that the phone can reach the card.',
                 },
                 {
                   title: 'Settings & help',
-                  body: 'Language, appearance, pairings, and help structured like a modern iOS settings stack.',
+                  body: 'Language, appearance, pairings, and help pages.',
                 },
                 {
-                  title: 'DE / EN',
-                  body: 'Full localization across screens, because civic software has to work in both languages cleanly.',
+                  title: 'Localization',
+                  body: 'German and English across the prototype.',
                 },
               ].map((item) => (
                 <li key={item.title} className="border-t border-white/10 pt-5">
@@ -275,15 +271,14 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Screens as evidence */}
         <section className="relative overflow-hidden border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
-              What that looks like
+              Screens
             </h2>
             <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
-              Screens from the prototype — consent, NFC, pairing, PIN, and
-              settings — built to feel like system software, not a brochure.
+              Representative states from the prototype: consent, NFC, pairing,
+              PIN, and settings.
             </p>
           </div>
 
@@ -318,16 +313,14 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* CTA — invite judgment */}
         <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.85rem,4.5vw,2.75rem)] font-semibold tracking-[-0.045em]">
-              Judge the interaction yourself
+              Try the prototype
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-[16px] leading-relaxed text-white/50">
-              Screenshots only go so far. Open the prototype and feel whether
-              the flows are calm, aligned, and fast enough for something this
-              important.
+              The interactive build is more useful than screenshots for
+              evaluating motion, density, and flow.
             </p>
             <p className="mx-auto mt-3 text-[14px] text-white/40">
               Demo card PIN <span className="text-white/70">123456</span>
@@ -357,10 +350,9 @@ export function LandingPage() {
               Leon Vogler
             </a>
             . Not affiliated with the official AusweisApp, Governikus, or the
-            German government. No real eID, NFC, or personal data. MIT-licensed
-            source on GitHub.
+            German government. No real eID, NFC, or personal data. MIT license.
           </p>
-          <p className="shrink-0">© {new Date().getFullYear()} redesign proposal</p>
+          <p className="shrink-0">© {new Date().getFullYear()}</p>
         </div>
       </footer>
     </div>

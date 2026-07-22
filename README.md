@@ -1,28 +1,28 @@
 # AusweisApp — web redesign proposal
 
-> **Unofficial design exploration.** This project is **not** the official [AusweisApp](https://www.ausweisapp.bund.de/) and is **not** affiliated with Governikus GmbH & Co. KG or the German government.
+> **Unofficial.** Not the official [AusweisApp](https://www.ausweisapp.bund.de/), and not affiliated with Governikus GmbH & Co. KG or the German government.
 
-**Live demo:** [lnvglr.github.io/ausweis-web](https://lnvglr.github.io/ausweis-web/) · by [Leon Vogler](https://leonvogler.com)
+**Demo:** [lnvglr.github.io/ausweis-web](https://lnvglr.github.io/ausweis-web/) · [Leon Vogler](https://leonvogler.com)
 
-## Why
+## Motivation
 
-Online identification asks for a high level of trust. The current AusweisApp UI and UX fall short of that: the experience feels dated and inconsistent, without a clear commitment to iOS conventions *or* to basic product craft — hierarchy, spacing, alignment, and responsive feedback.
+Online identification is a high-trust interaction. The current AusweisApp UI and UX do not meet that standard well: the interface feels inconsistent and dated. It is neither carefully aligned with iOS conventions nor with basic interaction design — hierarchy, spacing, alignment, and feedback.
 
-When an authenticator looks unfinished, confidence drops before the first NFC tap. Identity software should feel intentional and native: calm screens, snappy interaction, and layouts that stay aligned under pressure.
+An authenticator should behave like solid system software. Presentation quality is part of how trust is communicated; an unfinished-looking UI undermines confidence before the first NFC exchange.
 
-This repo is a concrete redesign proposal — the same core flows, rebuilt as a flat, iOS-aligned web prototype so the difference can be judged hands-on.
+This repository is an independent redesign proposal: the same core flows, reimplemented as a flat, iOS-aligned web prototype for direct inspection.
 
-## What this explores
+## Scope
 
-A React web prototype of AusweisApp mobile flows, with DE/EN localization and a simulated NFC sheet:
+React web prototype of AusweisApp mobile flows (DE/EN, simulated NFC):
 
 - **Identify online** — provider consent → NFC sheet → card PIN → success
 - **Phone as card reader** — pairing code for Mac, then standby for scan requests
-- **Change PIN** — choose 6-digit / Transport-PIN / no PIN before entry
-- **Device & ID check**, **Settings**, and extended **Help**
+- **Change PIN** — 6-digit / Transport-PIN / no PIN before entry
+- **Device & ID check**, **Settings**, and **Help**
 - Simulated NFC states (ready / reading / success / moved-away / timeout)
 
-The goal is not a different product. It is a higher craft bar for the same jobs: platform-familiar chrome, quieter hierarchy, and interactions that feel finished.
+The product surface stays the same; the presentation does not. No real eID transactions or hardware access.
 
 ## Screenshots
 
