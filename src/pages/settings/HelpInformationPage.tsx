@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 const EXTERNAL = {
   privacy: 'https://www.ausweisapp.bund.de/datenschutz',
@@ -42,7 +43,7 @@ export function HelpInformationPage() {
       />
       <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
         <GroupedList>
-          <Link to="/privacy" className="block active:bg-ios-fill/60">
+          <Link to={routes.privacy} className="block active:bg-ios-fill/60">
             <ListRow title={t('helpPrivacyStatement')} chevron />
           </Link>
           <ListRow

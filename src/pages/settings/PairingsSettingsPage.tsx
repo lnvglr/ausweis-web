@@ -3,6 +3,7 @@ import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { usePairings } from '@/context/PairingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 export function PairingsSettingsPage() {
   const { t } = useI18n()
@@ -59,10 +60,10 @@ export function PairingsSettingsPage() {
             title={t('settingsAddPairing')}
             chevron
             onClick={() =>
-              navigate('/companion', {
+              navigate(routes.companion, {
                 state: {
                   mode: 'pair',
-                  returnTo: '/settings/pairings',
+                  returnTo: routes.pairings,
                 },
               })
             }

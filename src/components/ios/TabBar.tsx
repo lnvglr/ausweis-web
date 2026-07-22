@@ -1,17 +1,18 @@
 import { NavLink } from 'react-router-dom'
 import { useI18n } from '@/i18n/I18nContext'
 import { cn } from '@/lib/cn'
+import { routes } from '@/lib/routes'
 import { SFGearshapeFill, SFWave3RightCircleFill } from '@/components/ios/SF'
 
 const tabs = [
   {
-    to: '/',
+    to: routes.home,
     key: 'tabScan' as const,
     end: true,
     Icon: SFWave3RightCircleFill,
   },
   {
-    to: '/settings',
+    to: routes.settings,
     key: 'tabSettings' as const,
     Icon: SFGearshapeFill,
   },

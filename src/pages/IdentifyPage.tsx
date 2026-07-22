@@ -15,6 +15,7 @@ import { SFCheckmark } from '@/components/ios/SF'
 import { useNfcSimulation } from '@/hooks/useNfcSimulation'
 import { useI18n } from '@/i18n/I18nContext'
 import type { TranslationKey } from '@/i18n/translations'
+import { routes } from '@/lib/routes'
 
 type Step = 'consent' | 'scan' | 'pin' | 'done' | 'failed'
 
@@ -60,7 +61,7 @@ export function IdentifyPage() {
   if (step === 'pin') {
     return (
       <CardPinEntry
-        onCancel={() => navigate('/')}
+        onCancel={() => navigate(routes.home)}
         onSuccess={() => setStep('done')}
         onLocked={() => setStep('failed')}
       />
@@ -74,7 +75,7 @@ export function IdentifyPage() {
         left={
           <NavBackButton
             label={t('commonCancel')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate(routes.home)}
           />
         }
       />
@@ -115,7 +116,7 @@ export function IdentifyPage() {
               <p className="mt-[7px] px-8 pb-6 text-[13px] leading-[18px] text-ios-secondary-label">
                 {t('identifyNoStorage')}{' '}
                 <Link
-                  to="/privacy"
+                  to={routes.privacy}
                   className="text-ios-primary active:opacity-60"
                 >
                   {t('identifyPrivacyLink')}
@@ -128,7 +129,7 @@ export function IdentifyPage() {
                 <IOSButton onClick={() => setStep('scan')}>
                   {t('identifyContinue')}
                 </IOSButton>
-                <IOSButton variant="plain" onClick={() => navigate('/')}>
+                <IOSButton variant="plain" onClick={() => navigate(routes.home)}>
                   {t('identifyCancel')}
                 </IOSButton>
               </ActionStack>
@@ -167,7 +168,7 @@ export function IdentifyPage() {
               {t('successTitle')}
             </h2>
             <div className="mt-8 w-full max-w-[320px]">
-              <IOSButton onClick={() => navigate('/')}>
+              <IOSButton onClick={() => navigate(routes.home)}>
                 {t('successDone')}
               </IOSButton>
             </div>
@@ -183,7 +184,7 @@ export function IdentifyPage() {
               {t('pinLockedBody')}
             </p>
             <div className="mt-8 w-full max-w-[320px]">
-              <IOSButton onClick={() => navigate('/')}>
+              <IOSButton onClick={() => navigate(routes.home)}>
                 {t('failHome')}
               </IOSButton>
             </div>

@@ -3,9 +3,11 @@ import { AppShell } from '@/components/ios/AppShell'
 import { PairingsProvider } from '@/context/PairingsContext'
 import { SettingsProvider } from '@/context/SettingsContext'
 import { I18nProvider } from '@/i18n/I18nContext'
+import { DEMO } from '@/lib/routes'
 import { CompanionPage } from '@/pages/CompanionPage'
 import { HomePage } from '@/pages/HomePage'
 import { IdentifyPage } from '@/pages/IdentifyPage'
+import { LandingPage } from '@/pages/LandingPage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { AppearanceSettingsPage } from '@/pages/settings/AppearanceSettingsPage'
@@ -27,9 +29,12 @@ export default function App() {
     <I18nProvider>
       <SettingsProvider>
         <PairingsProvider>
-          <BrowserRouter>
+          <BrowserRouter
+            basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}
+          >
             <Routes>
-              <Route element={<AppShell />}>
+              <Route index element={<LandingPage />} />
+              <Route path={DEMO.slice(1)} element={<AppShell />}>
                 <Route index element={<HomePage />} />
                 <Route path="identify" element={<IdentifyPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />
@@ -81,8 +86,9 @@ export default function App() {
                   path="settings/help/release-notes"
                   element={<HelpReleaseNotesPage />}
                 />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<Navigate to={DEMO} replace />} />
               </Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </BrowserRouter>
         </PairingsProvider>

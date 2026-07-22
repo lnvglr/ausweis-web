@@ -4,6 +4,7 @@ import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { SelectionCheck } from '@/components/ios/PageChrome'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 import type { ReadingMode } from '@/context/SettingsContext'
 
 const options: {
@@ -26,7 +27,7 @@ export function ReadingModeSettingsPage() {
         left={
           <NavBackButton
             label={t('commonBack')}
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate(routes.settings)}
           />
         }
       />

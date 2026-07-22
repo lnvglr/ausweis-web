@@ -3,6 +3,7 @@ import { GroupedList } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 export function DeviceNameSettingsPage() {
   const { t } = useI18n()
@@ -16,7 +17,7 @@ export function DeviceNameSettingsPage() {
         left={
           <NavBackButton
             label={t('commonBack')}
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate(routes.settings)}
           />
         }
       />

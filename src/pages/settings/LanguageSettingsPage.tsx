@@ -3,6 +3,7 @@ import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { SelectionCheck } from '@/components/ios/PageChrome'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 import type { Locale } from '@/i18n/translations'
 
 const languages: {
@@ -25,7 +26,7 @@ export function LanguageSettingsPage() {
         left={
           <NavBackButton
             label={t('commonBack')}
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate(routes.settings)}
           />
         }
       />

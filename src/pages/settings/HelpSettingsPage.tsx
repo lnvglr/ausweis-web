@@ -2,13 +2,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 const sections = [
-  { to: '/settings/help/general', key: 'helpSectionGeneral' as const },
-  { to: '/settings/help/data', key: 'helpSectionData' as const },
-  { to: '/settings/help/information', key: 'helpSectionInformation' as const },
-  { to: '/settings/help/license', key: 'helpSectionLicense' as const },
-  { to: '/settings/help/release-notes', key: 'helpSectionReleaseNotes' as const },
+  { to: routes.helpGeneral, key: 'helpSectionGeneral' as const },
+  { to: routes.helpData, key: 'helpSectionData' as const },
+  { to: routes.helpInformation, key: 'helpSectionInformation' as const },
+  { to: routes.helpLicense, key: 'helpSectionLicense' as const },
+  { to: routes.helpReleaseNotes, key: 'helpSectionReleaseNotes' as const },
 ]
 
 export function HelpSettingsPage() {

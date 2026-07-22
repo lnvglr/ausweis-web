@@ -5,6 +5,7 @@ import { SFChevronRight, SFIphone } from '@/components/ios/SF'
 import { usePairings } from '@/context/PairingsContext'
 import { useI18n } from '@/i18n/I18nContext'
 import { iosSpring } from '@/lib/iosMotion'
+import { routes } from '@/lib/routes'
 
 export function HomePage() {
   const { t } = useI18n()
@@ -26,7 +27,7 @@ export function HomePage() {
           type="button"
           whileTap={{ scale: 0.98 }}
           transition={iosSpring.press}
-          onClick={() => navigate('/identify')}
+          onClick={() => navigate(routes.identify)}
           className="w-full overflow-hidden rounded-[var(--radius-ios-grouped)] bg-[#0b1f3a] p-5 text-left text-white shadow-[0_12px_40px_rgba(11,31,58,0.28)]"
         >
           <div className="flex items-center gap-2">
@@ -60,7 +61,7 @@ export function HomePage() {
           whileTap={{ scale: 0.98 }}
           transition={iosSpring.press}
           onClick={() =>
-            navigate('/companion', {
+            navigate(routes.companion, {
               state: {
                 mode: hasPairing ? 'use' : 'pair',
               },

@@ -2,14 +2,14 @@ import { AnimatedOutlet } from './AnimatedOutlet'
 import { TabBar } from './TabBar'
 import { useLocation } from 'react-router-dom'
 import { cn } from '@/lib/cn'
+import { demoRelativePath } from '@/lib/routes'
 
 const FLOW_PATHS = new Set(['/identify', '/companion', '/privacy'])
 
 export function AppShell() {
   const location = useLocation()
-  const hideTab =
-    FLOW_PATHS.has(location.pathname) ||
-    location.pathname.startsWith('/settings/')
+  const path = demoRelativePath(location.pathname)
+  const hideTab = FLOW_PATHS.has(path) || path.startsWith('/settings/')
 
   return (
     <div className="flex h-full items-center justify-center bg-[#0b0b0f] p-0 sm:p-6">

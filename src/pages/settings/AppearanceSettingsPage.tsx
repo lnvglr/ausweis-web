@@ -5,6 +5,7 @@ import { IOSSwitch } from '@/components/ios/IOSSwitch'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 import { cn } from '@/lib/cn'
 import { SFCheckmark } from '@/components/ios/SF'
 
@@ -50,7 +51,7 @@ export function AppearanceSettingsPage() {
         left={
           <NavBackButton
             label={t('commonBack')}
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate(routes.settings)}
           />
         }
       />

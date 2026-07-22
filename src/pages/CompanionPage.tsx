@@ -14,6 +14,7 @@ import { SFCheckmark, SFMacbook } from '@/components/ios/SF'
 import { usePairings } from '@/context/PairingsContext'
 import { useI18n } from '@/i18n/I18nContext'
 import { cn } from '@/lib/cn'
+import { routes } from '@/lib/routes'
 
 type Mode = 'pair' | 'use'
 type Phase = 'code' | 'ready' | 'pin' | 'done'
@@ -102,7 +103,7 @@ export function CompanionPage() {
 
   const openManagePairings = useCallback(() => {
     setDemoScanPending(false)
-    navigate('/settings/pairings', {
+    navigate(routes.pairings, {
       state: { from: 'companion' },
     })
   }, [navigate])

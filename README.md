@@ -2,6 +2,8 @@
 
 > **Unofficial design exploration.** This project is **not** the official [AusweisApp](https://www.ausweisapp.bund.de/) and is **not** affiliated with Governikus GmbH & Co. KG or the German government. It is a **redesign proposal** for a flat, iOS-aligned web demo of the AusweisApp experience, built with the help of AI.
 
+**Live demo:** [lnvglr.github.io/ausweis-web](https://lnvglr.github.io/ausweis-web/)
+
 A React web prototype of the German AusweisApp mobile flows: online identification, smartphone-as-card-reader pairing, PIN change, device checks, settings, and help — with DE/EN localization and a simulated NFC sheet.
 
 ## Screenshots
@@ -41,8 +43,23 @@ npm install
 npm run dev
 ```
 
+Open the landing page, then **Open prototype** (or go to `/demo`).
+
 Demo card PIN: `123456`  
 Demo Transport-PIN: `12345`
+
+## GitHub Pages
+
+Pushes to `main` build and deploy via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
+
+In the repo **Settings → Pages**, set Source to **GitHub Actions** (required once).
+
+Local production build with the Pages base path:
+
+```bash
+VITE_BASE=/ausweis-web/ npm run build
+npx vite preview --base /ausweis-web/
+```
 
 ## Stack
 

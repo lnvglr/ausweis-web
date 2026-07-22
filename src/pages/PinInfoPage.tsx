@@ -13,6 +13,7 @@ import {
   SFPersonBadgeKeyFill,
 } from '@/components/ios/SF'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 type Props = {
   onBack: () => void
@@ -125,7 +126,7 @@ export function PinInfoPage({ onBack }: Props) {
 
           <div className="px-4 pt-2 pb-8">
             <Link
-              to="/privacy"
+              to={routes.privacy}
               className="inline-flex min-h-11 items-center text-[17px] font-medium tracking-[-0.41px] text-ios-primary active:opacity-60"
             >
               {t('identifyPrivacyLink')}

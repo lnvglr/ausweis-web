@@ -9,6 +9,7 @@ import { HomePage } from '@/pages/HomePage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { iosTween, withReducedMotion } from '@/lib/iosMotion'
 import { cn } from '@/lib/cn'
+import { demoRelativePath } from '@/lib/routes'
 
 const TAB_PATHS = new Set(['/', '/settings'])
 const FLOW_PATHS = new Set(['/identify', '/companion', '/privacy'])
@@ -39,14 +40,15 @@ export function AnimatedOutlet() {
   const outlet = useOutlet()
   const navType = useNavigationType()
   const reduced = useReducedMotion() ?? false
+  const path = demoRelativePath(location.pathname)
 
-  const onTab = isTabPath(location.pathname)
+  const onTab = isTabPath(path)
 
   const visitedTabs = useRef(new Set<string>(['/']))
-  if (onTab) visitedTabs.current.add(location.pathname)
+  if (onTab) visitedTabs.current.add(path)
 
-  const pathRef = useRef(location.pathname)
-  const depthRef = useRef(stackDepth(location.pathname))
+  const pathRef = useRef(path)
+  const depthRef = useRef(stackDepth(path))
   const outletRef = useRef(outlet)
   outletRef.current = outlet
 
@@ -61,13 +63,13 @@ export function AnimatedOutlet() {
     onTab
       ? null
       : {
-          key: location.pathname,
+          key: path,
           node: outlet,
         },
   )
 
   useLayoutEffect(() => {
-    const nextPath = location.pathname
+    const nextPath = demoRelativePath(location.pathname)
     if (nextPath === pathRef.current) return
 
     const prevPath = pathRef.current
@@ -117,8 +119,8 @@ export function AnimatedOutlet() {
   const stackOpen = Boolean(stack)
   const underlay = underlayRef.current
 
-  const homeActive = location.pathname === '/' && !stackOpen
-  const settingsActive = location.pathname === '/settings' && !stackOpen
+  const homeActive = path === '/' && !stackOpen
+  const settingsActive = path === '/settings' && !stackOpen
   const homeUnder = stackOpen && underlay === '/'
   const settingsUnder = stackOpen && underlay === '/settings'
 

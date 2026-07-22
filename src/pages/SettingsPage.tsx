@@ -4,6 +4,7 @@ import { IOSSwitch } from '@/components/ios/IOSSwitch'
 import { NavBar } from '@/components/ios/NavBar'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { routes } from '@/lib/routes'
 
 export function SettingsPage() {
   const { t, locale } = useI18n()
@@ -28,7 +29,7 @@ export function SettingsPage() {
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto pb-32 pt-3">
         <GroupedList>
           <Link
-            to="/settings/change-pin"
+            to={routes.changePin}
             className="block active:bg-ios-fill/60"
           >
             <ListRow title={t('settingsChangePin')} chevron />
@@ -37,7 +38,7 @@ export function SettingsPage() {
 
         <GroupedList>
           <Link
-            to="/settings/language"
+            to={routes.language}
             className="block active:bg-ios-fill/60"
           >
             <ListRow
@@ -47,7 +48,7 @@ export function SettingsPage() {
             />
           </Link>
           <Link
-            to="/settings/appearance"
+            to={routes.appearance}
             className="block active:bg-ios-fill/60"
           >
             <ListRow
@@ -57,7 +58,7 @@ export function SettingsPage() {
             />
           </Link>
           <Link
-            to="/settings/reading-mode"
+            to={routes.readingMode}
             className="block active:bg-ios-fill/60"
           >
             <ListRow
@@ -70,7 +71,7 @@ export function SettingsPage() {
 
         <GroupedList>
           <Link
-            to="/settings/device-name"
+            to={routes.deviceName}
             className="block active:bg-ios-fill/60"
           >
             <ListRow
@@ -98,7 +99,7 @@ export function SettingsPage() {
             }
           />
           <Link
-            to="/settings/pairings"
+            to={routes.pairings}
             className="block active:bg-ios-fill/60"
           >
             <ListRow title={t('settingsManagePairings')} chevron />
@@ -128,19 +129,19 @@ export function SettingsPage() {
 
         <GroupedList>
           <Link
-            to="/settings/device-check"
+            to={routes.deviceCheck}
             className="block active:bg-ios-fill/60"
           >
             <ListRow title={t('checkTitle')} chevron />
           </Link>
-          <Link to="/settings/help" className="block active:bg-ios-fill/60">
+          <Link to={routes.help} className="block active:bg-ios-fill/60">
             <ListRow title={t('helpTitle')} chevron />
           </Link>
         </GroupedList>
 
         <GroupedList>
           <ListRow title={t('settingsVersion')} detail="1.0" />
-          <Link to="/privacy" className="block active:bg-ios-fill/60">
+          <Link to={routes.privacy} className="block active:bg-ios-fill/60">
             <ListRow title={t('settingsPrivacy')} chevron />
           </Link>
         </GroupedList>
