@@ -115,7 +115,7 @@ export function NfcScanSheet({
               type="button"
               onClick={onCancel}
               aria-label={cancelLabel}
-              className="absolute right-[18px] top-[18px] flex h-[30px] w-[30px] items-center justify-center rounded-full active:opacity-70"
+              className="absolute end-[18px] top-[18px] flex h-[30px] w-[30px] items-center justify-center rounded-full active:opacity-70"
               style={{ backgroundColor: CLOSE_BG }}
             >
               <SFXmark size={12} className="text-ios-secondary-label" aria-hidden />

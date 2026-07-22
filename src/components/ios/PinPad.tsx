@@ -84,7 +84,7 @@ export function PinPad({
   }, [popIndex])
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center" dir="ltr">
       <div
         className="mb-10 flex items-center gap-[14px]"
         style={

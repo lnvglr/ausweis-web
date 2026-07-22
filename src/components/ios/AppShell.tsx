@@ -5,6 +5,7 @@ import { DemoControls } from '@/components/demo/DemoControls'
 import { SFXmark } from '@/components/ios/SF'
 import { useSettings } from '@/context/SettingsContext'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import { useI18n } from '@/i18n/I18nContext'
 import { cn } from '@/lib/cn'
 import { demoRelativePath } from '@/lib/routes'
 
@@ -27,6 +28,7 @@ export function AppShell() {
   const { resetToken } = useSettings()
   const colorScheme = useColorScheme()
   const isDark = colorScheme === 'dark'
+  const { rtl, contentLocale } = useI18n()
 
   return (
     <div className="relative h-full overflow-x-hidden overflow-y-auto bg-[#0b0b0f]">
@@ -63,7 +65,10 @@ export function AppShell() {
                 'relative m-[3px] flex min-h-0 flex-1 flex-col overflow-hidden bg-ios-grouped text-ios-label',
                 'rounded-[calc(var(--iphone-17-radius)-3px)]',
                 isDark && 'dark',
+                contentLocale === 'ar' && 'font-[family-name:var(--font-inter-arabic)] tracking-normal',
               )}
+              dir={rtl ? 'rtl' : 'ltr'}
+              lang={contentLocale}
             >
               <div
                 className="pointer-events-none absolute left-1/2 z-50 -translate-x-1/2 bg-black"

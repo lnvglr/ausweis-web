@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import { HomePage } from '@/pages/HomePage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { useI18n } from '@/i18n/I18nContext'
 import { iosTween, withReducedMotion } from '@/lib/iosMotion'
 import { cn } from '@/lib/cn'
 import { demoRelativePath } from '@/lib/routes'
@@ -45,7 +46,9 @@ export function AnimatedOutlet() {
   const outlet = useOutlet()
   const navType = useNavigationType()
   const reduced = useReducedMotion() ?? false
+  const { rtl } = useI18n()
   const path = demoRelativePath(location.pathname)
+  const axis = rtl ? -1 : 1
 
   const onTab = isTabPath(path)
 
@@ -123,6 +126,8 @@ export function AnimatedOutlet() {
   const dir = directionRef.current
   const stackOpen = Boolean(stack)
   const underlay = underlayRef.current
+  /** Combined nav direction × writing-direction for enter/exit x. */
+  const motionCustom = { d: dir, axis }
 
   const homeActive = path === '/' && !stackOpen
   const settingsActive = path === '/settings' && !stackOpen
@@ -140,7 +145,7 @@ export function AnimatedOutlet() {
           aria-hidden={!homeActive}
           initial={false}
           animate={{
-            x: homeUnder ? '-28%' : '0%',
+            x: homeUnder ? `${axis * -28}%` : '0%',
           }}
           transition={transition}
           style={{
@@ -161,7 +166,7 @@ export function AnimatedOutlet() {
           aria-hidden={!settingsActive}
           initial={false}
           animate={{
-            x: settingsUnder ? '-28%' : '0%',
+            x: settingsUnder ? `${axis * -28}%` : '0%',
           }}
           transition={transition}
           style={{
@@ -173,22 +178,25 @@ export function AnimatedOutlet() {
         </motion.div>
       ) : null}
 
-      <AnimatePresence initial={false} custom={dir}>
+      <AnimatePresence initial={false} custom={motionCustom}>
         {stack ? (
           <motion.div
             key={stack.key}
-            custom={dir}
+            custom={motionCustom}
             variants={{
-              initial: (d: number) => ({
-                x: d >= 0 ? '100%' : '-28%',
-                boxShadow: d >= 0 ? '-8px 0 24px rgba(0,0,0,0.08)' : 'none',
+              initial: ({ d, axis: a }: { d: number; axis: number }) => ({
+                x: d >= 0 ? `${a * 100}%` : `${a * -28}%`,
+                boxShadow:
+                  d >= 0
+                    ? `${a < 0 ? '8px' : '-8px'} 0 24px rgba(0,0,0,0.08)`
+                    : 'none',
               }),
-              animate: {
+              animate: ({ axis: a }: { d: number; axis: number }) => ({
                 x: 0,
-                boxShadow: '-4px 0 16px rgba(0,0,0,0.06)',
-              },
-              exit: (d: number) => ({
-                x: d >= 0 ? '-28%' : '100%',
+                boxShadow: `${a < 0 ? '4px' : '-4px'} 0 16px rgba(0,0,0,0.06)`,
+              }),
+              exit: ({ d, axis: a }: { d: number; axis: number }) => ({
+                x: d >= 0 ? `${a * -28}%` : `${a * 100}%`,
                 boxShadow: 'none',
               }),
             }}

@@ -36,7 +36,7 @@ export function HelpDataPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList header={t('helpSystemData')} footer={t('helpDataFooter')}>
           {systemRows.map(([label, value]) => (
             <div key={label} className="px-4 py-3">

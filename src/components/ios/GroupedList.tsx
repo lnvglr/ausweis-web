@@ -26,17 +26,17 @@ export function GroupedList({
    */
   iconInset?: boolean | 'badge' | 'symbol'
 }) {
-  const insetLeft =
+  const insetStart =
     iconInset === 'symbol'
-      ? '[&>*:not(:last-child)]:after:left-[50px]'
+      ? '[&>*:not(:last-child)]:after:start-[50px]'
       : iconInset
-        ? '[&>*:not(:last-child)]:after:left-[60px]'
-        : '[&>*:not(:last-child)]:after:left-4'
+        ? '[&>*:not(:last-child)]:after:start-[60px]'
+        : '[&>*:not(:last-child)]:after:start-4'
 
   return (
     <section className={cn('px-4', className)}>
       {header ? (
-        <p className="mb-[7px] px-4 text-[13px] font-normal leading-[18px] text-ios-secondary-label">
+        <p className="mb-[7px] px-4 text-start text-[13px] font-normal leading-[18px] text-ios-secondary-label">
           {header}
         </p>
       ) : null}
@@ -47,17 +47,17 @@ export function GroupedList({
           '[&>*:not(:last-child)]:after:pointer-events-none',
           '[&>*:not(:last-child)]:after:absolute',
           '[&>*:not(:last-child)]:after:bottom-0',
-          '[&>*:not(:last-child)]:after:right-0',
+          '[&>*:not(:last-child)]:after:end-0',
           '[&>*:not(:last-child)]:after:h-px',
           '[&>*:not(:last-child)]:after:bg-ios-separator',
           '[&>*:not(:last-child)]:after:content-[""]',
-          insetLeft,
+          insetStart,
         )}
       >
         {children}
       </div>
       {footer ? (
-        <p className="mt-[7px] px-4 text-[13px] leading-[18px] text-ios-secondary-label">
+        <p className="mt-[7px] px-4 text-start text-[13px] leading-[18px] text-ios-secondary-label">
           {footer}
         </p>
       ) : null}
@@ -93,7 +93,7 @@ export function ListRow({
       type={onClick ? 'button' : undefined}
       onClick={onClick}
       className={cn(
-        'flex w-full text-left',
+        'flex w-full text-start',
         topAligned
           ? 'items-start gap-3 px-4 py-4'
           : 'min-h-[48px] items-center gap-[15px] px-4 py-[14px]',
@@ -101,7 +101,7 @@ export function ListRow({
       )}
     >
       {leading ? <div className="shrink-0">{leading}</div> : null}
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 text-start">
         <div
           className={cn(
             'text-[17px] leading-[22px] tracking-[-0.2px]',
@@ -118,7 +118,7 @@ export function ListRow({
         ) : null}
       </div>
       {detail ? (
-        <span className="max-w-[42%] shrink-0 truncate text-[17px] leading-[22px] text-ios-secondary-label">
+        <span className="max-w-[42%] shrink-0 truncate text-end text-[17px] leading-[22px] text-ios-secondary-label">
           {detail}
         </span>
       ) : null}
@@ -126,7 +126,7 @@ export function ListRow({
       {chevron ? (
         <SFChevronRight
           size={14}
-          className="shrink-0 text-ios-gray3"
+          className="ios-mirror-rtl shrink-0 text-ios-gray3"
           aria-hidden
         />
       ) : null}

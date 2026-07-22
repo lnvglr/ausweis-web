@@ -174,7 +174,7 @@ export function ChangePinSettingsPage() {
             <button
               type="button"
               onClick={() => setStep('typesHelp')}
-              className="min-h-11 text-left text-[13px] leading-[18px] text-ios-primary active:opacity-60"
+              className="min-h-11 text-start text-[13px] leading-[18px] text-ios-primary active:opacity-60"
             >
               {t('settingsChangePinTypesHelp')}
             </button>
@@ -196,7 +196,7 @@ export function ChangePinSettingsPage() {
             />
           }
         />
-        <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+        <div className="min-h-0 flex-1 overflow-y-auto py-8">
           <PageIntro
             title={t('settingsChangePinTypesHelp')}
             body={t('settingsChangePinTypesBody')}
@@ -235,7 +235,7 @@ export function ChangePinSettingsPage() {
             />
           }
         />
-        <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+        <div className="min-h-0 flex-1 overflow-y-auto py-8">
           <PageIntro
             title={t('settingsChangePinNone')}
             body={t('settingsChangePinNoneInfo')}

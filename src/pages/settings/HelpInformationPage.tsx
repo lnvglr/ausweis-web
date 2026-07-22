@@ -41,7 +41,7 @@ export function HelpInformationPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList>
           <Link to={routes.privacy} className="block active:bg-ios-fill/60">
             <ListRow title={t('helpPrivacyStatement')} chevron />

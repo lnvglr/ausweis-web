@@ -27,7 +27,7 @@ export function HelpSettingsPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList footer={t('helpHubFooter')}>
           {sections.map((section) => (
             <Link

@@ -103,6 +103,22 @@ export const pushVariants: Variants = {
   }),
 }
 
+/** RTL-aware push — pass `{ d, axis }` where axis is 1 (LTR) or -1 (RTL). */
+export const pushVariantsRtl: Variants = {
+  initial: ({ d, axis }: { d: number; axis: number }) => ({
+    x: d >= 0 ? `${axis * 100}%` : `${axis * -28}%`,
+    zIndex: d >= 0 ? 3 : 1,
+  }),
+  animate: {
+    x: 0,
+    zIndex: 2,
+  },
+  exit: ({ d, axis }: { d: number; axis: number }) => ({
+    x: d >= 0 ? `${axis * -28}%` : `${axis * 100}%`,
+    zIndex: d >= 0 ? 1 : 3,
+  }),
+}
+
 /** Tab switches are a quick crossfade — no slide. */
 export const tabVariants: Variants = {
   initial: { opacity: 0 },

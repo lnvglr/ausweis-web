@@ -37,7 +37,7 @@ export function AppearanceSettingsPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList>
           <div className="flex justify-center gap-10 px-4 pb-5 pt-6">
             <AppearanceChoice

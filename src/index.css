@@ -4,6 +4,8 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
     "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Inter for Latin mixed in; Noto Sans Arabic for Arabic script. */
+  --font-inter-arabic: "Noto Sans Arabic", Inter, var(--font-sans);
 
   --color-ios-blue: #007aff;
   --color-ios-blue-pressed: #0066d6;
@@ -101,6 +103,17 @@ body {
   text-rendering: optimizeLegibility;
   overflow: hidden;
   letter-spacing: -0.01em;
+}
+
+/* Arabic UI — Inter stack with Noto Sans Arabic for script coverage. */
+[lang='ar'] {
+  font-family: var(--font-inter-arabic);
+  letter-spacing: 0;
+}
+
+/* Flip directional chevrons / back arrows in RTL. */
+[dir='rtl'] .ios-mirror-rtl {
+  transform: scaleX(-1);
 }
 
 /* Slightly tighter tracking on headlines */

@@ -40,7 +40,7 @@ export function HelpGeneralPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList header={t('helpSetup')} footer={t('helpSetupFooter')}>
           <ListRow
             title={t('helpSetup')}
@@ -64,7 +64,7 @@ export function HelpGeneralPage() {
               <div key={q}>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between gap-3 px-4 py-[11px] text-left active:bg-ios-fill/50"
+                  className="flex w-full items-center justify-between gap-3 px-4 py-[11px] text-start active:bg-ios-fill/50"
                   onClick={() => setOpenFaq(isOpen ? null : q)}
                 >
                   <span className="text-[17px] leading-[22px] tracking-[-0.2px] text-ios-label">

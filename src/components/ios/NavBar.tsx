@@ -36,7 +36,7 @@ export function NavBar({
             </h1>
           ) : null}
         </div>
-        <div className="z-10 ml-auto flex min-w-11 items-center justify-end">
+        <div className="z-10 ms-auto flex min-w-11 items-center justify-end">
           {right}
         </div>
       </div>
@@ -76,7 +76,11 @@ export function NavBackButton({
         'text-ios-label transition active:scale-[0.94] active:opacity-90',
       )}
     >
-      <SFChevronBackward size={20} aria-hidden />
+      <SFChevronBackward
+        size={20}
+        aria-hidden
+        className="ios-mirror-rtl"
+      />
     </button>
   )
 }

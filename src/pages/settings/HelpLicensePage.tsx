@@ -18,7 +18,7 @@ export function HelpLicensePage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         <GroupedList header={t('helpLicenseTerms')}>
           <p className="px-4 py-3.5 text-[15px] leading-[20px] text-ios-secondary-label">
             {t('helpLicenseIntro')}

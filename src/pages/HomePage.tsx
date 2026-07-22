@@ -69,7 +69,7 @@ export function HomePage() {
               transition={iosTween.soft}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(routes.identify)}
-              className="flex h-[260px] w-full flex-col overflow-hidden rounded-[var(--radius-ios-grouped)] bg-[#0b1f3a] p-5 text-left text-white shadow-lg"
+              className="flex h-[260px] w-full flex-col overflow-hidden rounded-[var(--radius-ios-grouped)] bg-[#0b1f3a] p-5 text-start text-white shadow-lg"
             >
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
@@ -144,7 +144,7 @@ export function HomePage() {
               },
             })
           }
-          className="mt-5 flex w-full items-center gap-4 rounded-[var(--radius-ios-grouped)] border border-ios-separator bg-ios-card p-4 text-left active:bg-ios-fill/40"
+          className="mt-5 flex w-full items-center gap-4 rounded-[var(--radius-ios-grouped)] border border-ios-separator bg-ios-card p-4 text-start active:bg-ios-fill/40"
         >
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-ios-xl)] bg-[#5856D6]/12 text-[#5856D6]">
             <SFIphone size={24} aria-hidden />
@@ -164,7 +164,7 @@ export function HomePage() {
           </span>
           <SFChevronRight
             size={14}
-            className="shrink-0 text-ios-gray3"
+            className="ios-mirror-rtl shrink-0 text-ios-gray3"
             aria-hidden
           />
         </motion.button>
@@ -174,7 +174,7 @@ export function HomePage() {
           whileTap={{ scale: 0.98 }}
           transition={iosSpring.press}
           onClick={() => navigate(routes.personalData)}
-          className="mt-3 flex w-full items-center gap-4 rounded-[var(--radius-ios-grouped)] border border-ios-separator bg-ios-card p-4 text-left active:bg-ios-fill/40"
+          className="mt-3 flex w-full items-center gap-4 rounded-[var(--radius-ios-grouped)] border border-ios-separator bg-ios-card p-4 text-start active:bg-ios-fill/40"
         >
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-ios-xl)] bg-ios-primary/12 text-ios-primary">
             <SFPersonBadgeKeyFill size={24} aria-hidden />
@@ -189,7 +189,7 @@ export function HomePage() {
           </span>
           <SFChevronRight
             size={14}
-            className="shrink-0 text-ios-gray3"
+            className="ios-mirror-rtl shrink-0 text-ios-gray3"
             aria-hidden
           />
         </motion.button>

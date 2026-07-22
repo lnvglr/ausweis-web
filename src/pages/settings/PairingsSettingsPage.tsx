@@ -21,7 +21,7 @@ export function PairingsSettingsPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto py-8">
         {devices.length > 0 ? (
           <GroupedList
             header={t('settingsPairedDevices')}

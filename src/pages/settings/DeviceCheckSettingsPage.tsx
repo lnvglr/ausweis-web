@@ -61,7 +61,7 @@ export function DeviceCheckSettingsPage() {
 
       <div className="flex min-h-0 flex-1 flex-col">
         {phase === 'done' ? (
-          <div className="min-h-0 flex-1 overflow-y-auto pb-8 pt-4">
+          <div className="min-h-0 flex-1 overflow-y-auto py-8">
             <PageIntro
               title={t('checkDone')}
               body={t('checkSuccessBody')}

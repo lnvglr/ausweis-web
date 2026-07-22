@@ -44,7 +44,7 @@ export function ScreenTopBar({
       )}
     >
       <div className="flex min-w-11 items-center justify-start">{left}</div>
-      <div className="ml-auto flex min-w-11 items-center justify-end">{right}</div>
+      <div className="ms-auto flex min-w-11 items-center justify-end">{right}</div>
     </div>
   )
 }

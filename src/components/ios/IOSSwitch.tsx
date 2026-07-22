@@ -29,6 +29,7 @@ export function IOSSwitch({
         'appearance-none border-0 outline-none',
         'transition-[background,box-shadow] duration-300',
         'ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'ios-mirror-rtl',
         checked
           ? 'bg-[#34c759] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.06)]'
           : 'bg-[#787880]/16 shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.04)]',
