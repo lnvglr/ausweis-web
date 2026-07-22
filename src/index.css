@@ -75,6 +75,8 @@
   --color-ios-fill: rgba(120, 120, 128, 0.36);
   --color-ios-grouped: #000000;
   --color-ios-card: #1c1c1e;
+  /* Re-resolve label color so inherited body black does not stick in dark mode. */
+  color: var(--color-ios-label);
 }
 
 *,
@@ -175,7 +177,67 @@ h3,
 .landing {
   --font-landing-display: "Syne", var(--font-sans);
   --font-landing-body: "DM Sans", var(--font-sans);
+  --landing-bg: #07090f;
+  --landing-fg: #f4f6fa;
+  --landing-muted: rgba(255, 255, 255, 0.55);
+  --landing-soft: rgba(255, 255, 255, 0.85);
+  --landing-faint: rgba(255, 255, 255, 0.48);
+  --landing-dim: rgba(255, 255, 255, 0.4);
+  --landing-border: rgba(255, 255, 255, 0.06);
+  --landing-border-strong: rgba(255, 255, 255, 0.1);
+  --landing-accent: #6eb6ff;
+  --landing-chip-bg: rgba(255, 255, 255, 0.06);
+  --landing-chip-fg: #6eb6ff;
+  --landing-chip-muted-fg: rgba(255, 255, 255, 0.7);
+  --landing-btn-secondary-border: rgba(255, 255, 255, 0.15);
+  --landing-btn-secondary-bg: rgba(255, 255, 255, 0.04);
+  --landing-btn-secondary-hover-border: rgba(255, 255, 255, 0.25);
+  --landing-btn-secondary-hover-bg: rgba(255, 255, 255, 0.07);
+  --landing-btn-secondary-fg: rgba(255, 255, 255, 0.85);
+  --landing-nav: rgba(255, 255, 255, 0.55);
+  --landing-nav-hover: #ffffff;
+  --landing-link: rgba(255, 255, 255, 0.65);
+  --landing-link-hover: #ffffff;
+  --landing-link-underline: rgba(255, 255, 255, 0.2);
+  --landing-toggle-bg: rgba(255, 255, 255, 0.06);
+  --landing-toggle-border: rgba(255, 255, 255, 0.12);
+  --landing-toggle-hover: rgba(255, 255, 255, 0.1);
+  color-scheme: dark;
   font-family: var(--font-landing-body);
+  background-color: var(--landing-bg);
+  color: var(--landing-fg);
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.landing[data-theme='light'] {
+  --landing-bg: #eef2f8;
+  --landing-fg: #0b1220;
+  --landing-muted: rgba(11, 18, 32, 0.55);
+  --landing-soft: rgba(11, 18, 32, 0.88);
+  --landing-faint: rgba(11, 18, 32, 0.52);
+  --landing-dim: rgba(11, 18, 32, 0.42);
+  --landing-border: rgba(11, 18, 32, 0.08);
+  --landing-border-strong: rgba(11, 18, 32, 0.12);
+  --landing-accent: #0070e0;
+  --landing-chip-bg: rgba(0, 122, 255, 0.09);
+  --landing-chip-fg: #0070e0;
+  --landing-chip-muted-fg: rgba(11, 18, 32, 0.62);
+  --landing-btn-secondary-border: rgba(11, 18, 32, 0.12);
+  --landing-btn-secondary-bg: rgba(255, 255, 255, 0.72);
+  --landing-btn-secondary-hover-border: rgba(11, 18, 32, 0.18);
+  --landing-btn-secondary-hover-bg: #ffffff;
+  --landing-btn-secondary-fg: rgba(11, 18, 32, 0.88);
+  --landing-nav: rgba(11, 18, 32, 0.5);
+  --landing-nav-hover: #0b1220;
+  --landing-link: rgba(11, 18, 32, 0.7);
+  --landing-link-hover: #0b1220;
+  --landing-link-underline: rgba(11, 18, 32, 0.22);
+  --landing-toggle-bg: rgba(255, 255, 255, 0.7);
+  --landing-toggle-border: rgba(11, 18, 32, 0.1);
+  --landing-toggle-hover: #ffffff;
+  color-scheme: light;
 }
 
 .landing-glow {
@@ -187,6 +249,14 @@ h3,
     radial-gradient(ellipse 55% 50% at 20% 30%, rgba(0, 122, 255, 0.28), transparent 70%),
     radial-gradient(ellipse 45% 40% at 75% 15%, rgba(11, 31, 58, 0.85), transparent 65%),
     radial-gradient(ellipse 40% 35% at 60% 60%, rgba(0, 80, 180, 0.12), transparent 70%);
+  transition: opacity 0.35s ease;
+}
+
+.landing[data-theme='light'] .landing-glow {
+  background:
+    radial-gradient(ellipse 55% 50% at 20% 30%, rgba(0, 122, 255, 0.16), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 75% 15%, rgba(170, 200, 240, 0.55), transparent 65%),
+    radial-gradient(ellipse 40% 35% at 60% 60%, rgba(0, 122, 255, 0.08), transparent 70%);
 }
 
 .landing-grid {
@@ -199,44 +269,23 @@ h3,
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 70% 55% at 50% 20%, #000 20%, transparent 75%);
+  transition: opacity 0.35s ease;
 }
 
-.landing-phone-glow {
-  pointer-events: none;
-  position: absolute;
-  left: 50%;
-  top: 45%;
-  z-index: 0;
-  height: 70%;
-  width: 85%;
-  translate: -50% -50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 122, 255, 0.35) 0%,
-    rgba(0, 122, 255, 0.08) 42%,
-    transparent 70%
-  );
-  filter: blur(8px);
+.landing[data-theme='light'] .landing-grid {
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(11, 18, 32, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 18, 32, 0.05) 1px, transparent 1px);
 }
+
 
 .landing-phone {
   position: relative;
-  z-index: 1;
-  overflow: hidden;
-  border-radius: 64px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 28px 80px rgba(0, 0, 0, 0.55),
-    0 8px 24px rgba(0, 122, 255, 0.12);
-}
-
-.landing-highlight {
-  margin: 0;
-  overflow: hidden;
-  border-radius: 22px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 20px 48px rgba(0, 0, 0, 0.4);
+  margin-inline: -50vw;
+  @media (min-width: 1024px) {
+    margin-inline: -220px;
+  }
 }
 
 .safe-top {

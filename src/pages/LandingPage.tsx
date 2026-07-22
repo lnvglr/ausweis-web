@@ -15,6 +15,8 @@ import {
   SFViewfinder,
   SFWave3RightCircleFill,
 } from '@/components/ios/SF'
+import { useSettings } from '@/context/SettingsContext'
+import { useColorScheme } from '@/hooks/useColorScheme'
 import { routes } from '@/lib/routes'
 
 const asset = (file: string) =>
@@ -128,16 +130,40 @@ const HIGHLIGHTS: {
   },
 ]
 
+const APPEARANCE_CYCLE = ['system', 'light', 'dark'] as const
+
+const APPEARANCE_LABEL = {
+  system: 'System',
+  light: 'Light',
+  dark: 'Dark',
+} as const
+
+const APPEARANCE_NEXT_LABEL = {
+  system: 'Switch to light appearance',
+  light: 'Switch to dark appearance',
+  dark: 'Switch to system appearance',
+} as const
+
 export function LandingPage() {
   const reduceMotion = useReducedMotion()
+  const scheme = useColorScheme()
+  const { appearance, setAppearance } = useSettings()
 
   useEffect(() => {
     document.title = 'AusweisApp — redesign proposal'
     document.documentElement.lang = 'en'
   }, [])
 
+  const toggleAppearance = () => {
+    const i = APPEARANCE_CYCLE.indexOf(appearance)
+    setAppearance(APPEARANCE_CYCLE[(i + 1) % APPEARANCE_CYCLE.length])
+  }
+
   return (
-    <div className="landing fixed inset-0 overflow-x-hidden overflow-y-auto bg-[#07090f] text-[#f4f6fa]">
+    <div
+      className="landing fixed inset-0 overflow-x-hidden overflow-y-auto"
+      data-theme={scheme}
+    >
       <div className="landing-glow" aria-hidden />
       <div className="landing-grid" aria-hidden />
 
@@ -148,10 +174,25 @@ export function LandingPage() {
         >
           AusweisApp
         </a>
-        <nav className="flex items-center gap-5">
+        <nav className="flex items-center gap-4 sm:gap-5">
+          <button
+            type="button"
+            onClick={toggleAppearance}
+            aria-label={APPEARANCE_NEXT_LABEL[appearance]}
+            title={APPEARANCE_LABEL[appearance]}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--landing-toggle-border)] bg-[var(--landing-toggle-bg)] text-[color:var(--landing-fg)] transition hover:bg-[var(--landing-toggle-hover)] active:scale-[0.96]"
+          >
+            {appearance === 'system' ? (
+              <SystemIcon />
+            ) : appearance === 'light' ? (
+              <SunIcon />
+            ) : (
+              <MoonIcon />
+            )}
+          </button>
           <a
             href="https://leonvogler.com"
-            className="text-[13px] font-medium text-white/55 transition hover:text-white"
+            className="text-[13px] font-medium text-[color:var(--landing-nav)] transition hover:text-[color:var(--landing-nav-hover)]"
             rel="noreferrer"
             target="_blank"
           >
@@ -159,7 +200,7 @@ export function LandingPage() {
           </a>
           <a
             href="https://github.com/lnvglr/ausweis-web"
-            className="text-[13px] font-medium text-white/55 transition hover:text-white"
+            className="text-[13px] font-medium text-[color:var(--landing-nav)] transition hover:text-[color:var(--landing-nav-hover)]"
             rel="noreferrer"
             target="_blank"
           >
@@ -179,7 +220,7 @@ export function LandingPage() {
             <motion.p
               variants={fades}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6eb6ff]"
+              className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[color:var(--landing-accent)]"
             >
               Unofficial redesign proposal
             </motion.p>
@@ -193,7 +234,7 @@ export function LandingPage() {
             <motion.p
               variants={fades}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 max-w-md text-[clamp(1.1rem,2.2vw,1.35rem)] font-medium leading-snug tracking-[-0.02em] text-white/85"
+              className="mt-5 max-w-md text-[clamp(1.1rem,2.2vw,1.35rem)] font-medium leading-snug tracking-[-0.02em] text-[color:var(--landing-soft)]"
             >
               A flat, iOS-aligned web prototype of the German online ID flows —
               built because the current app’s interface does not meet the bar
@@ -212,7 +253,7 @@ export function LandingPage() {
               </Link>
               <a
                 href="https://github.com/lnvglr/ausweis-web"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-6 text-[15px] font-medium text-white/85 transition hover:border-white/25 hover:bg-white/[0.07]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[color:var(--landing-btn-secondary-border)] bg-[var(--landing-btn-secondary-bg)] px-6 text-[15px] font-medium text-[color:var(--landing-btn-secondary-fg)] transition hover:border-[color:var(--landing-btn-secondary-hover-border)] hover:bg-[var(--landing-btn-secondary-hover-bg)]"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -231,7 +272,6 @@ export function LandingPage() {
               delay: reduceMotion ? 0 : 0.12,
             }}
           >
-            <div className="landing-phone-glow" aria-hidden />
             <motion.div
               className="relative"
               animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
@@ -247,11 +287,11 @@ export function LandingPage() {
             >
               <div className="landing-phone">
                 <img
-                  src={asset('01-home-scan.png')}
+                  src={asset('/smartphone-screen-mockup-17.webp')}
                   alt="Redesigned AusweisApp Scan screen in an iPhone frame"
                   className="block h-auto w-full"
-                  width={1456}
-                  height={2008}
+                  width={1920}
+                  height={1335}
                   decoding="async"
                   fetchPriority="high"
                 />
@@ -260,12 +300,12 @@ export function LandingPage() {
           </motion.div>
         </section>
 
-        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+        <section className="relative border-t border-[color:var(--landing-border)] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-3xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
               Motivation
             </h2>
-            <div className="mt-6 space-y-5 text-[16px] leading-relaxed text-white/55 sm:text-[17px]">
+            <div className="mt-6 space-y-5 text-[16px] leading-relaxed text-[color:var(--landing-muted)] sm:text-[17px]">
               <p>
                 eID authentication is a high-trust interaction. The shipping
                 AusweisApp UI and UX do not reflect that: the interface feels
@@ -289,25 +329,28 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+        <section className="relative border-t border-[color:var(--landing-border)] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
               Design criteria
             </h2>
-            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
+            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-[color:var(--landing-faint)]">
               Assumptions this prototype is built against.
             </p>
 
             <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {CRITERIA.map(({ title, body, Icon }) => (
-                <li key={title} className="border-t border-white/10 pt-5">
-                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/[0.06] text-[#6eb6ff]">
+                <li
+                  key={title}
+                  className="border-t border-[color:var(--landing-border-strong)] pt-5"
+                >
+                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--landing-chip-bg)] text-[color:var(--landing-chip-fg)]">
                     <Icon size={18} aria-hidden />
                   </span>
                   <h3 className="text-[17px] font-semibold tracking-[-0.02em]">
                     {title}
                   </h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/48">
+                  <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--landing-faint)]">
                     {body}
                   </p>
                 </li>
@@ -316,13 +359,12 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Evidence: a few screens that carry the thesis */}
-        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+        <section className="relative border-t border-[color:var(--landing-border)] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
               In practice
             </h2>
-            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
+            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-[color:var(--landing-faint)]">
               Three moments from the prototype that show what the redesign is
               arguing for — calm hierarchy, platform-native chrome, and one job
               per screen.
@@ -345,7 +387,7 @@ export function LandingPage() {
                   <h3 className="mt-5 text-[17px] font-semibold tracking-[-0.02em]">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/48">
+                  <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--landing-faint)]">
                     {item.body}
                   </p>
                 </li>
@@ -354,26 +396,29 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+        <section className="relative border-t border-[color:var(--landing-border)] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
               Scope
             </h2>
-            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
+            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-[color:var(--landing-faint)]">
               Same functional jobs as the official app; different presentation.
               No real eID, NFC hardware, or personal data.
             </p>
 
             <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {SCOPE.map(({ title, body, Icon }) => (
-                <li key={title} className="border-t border-white/10 pt-5">
-                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/[0.06] text-white/70">
+                <li
+                  key={title}
+                  className="border-t border-[color:var(--landing-border-strong)] pt-5"
+                >
+                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--landing-chip-bg)] text-[color:var(--landing-chip-muted-fg)]">
                     <Icon size={18} aria-hidden />
                   </span>
                   <h3 className="text-[17px] font-semibold tracking-[-0.02em]">
                     {title}
                   </h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/48">
+                  <p className="mt-2 text-[14px] leading-relaxed text-[color:var(--landing-faint)]">
                     {body}
                   </p>
                 </li>
@@ -382,19 +427,21 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+        <section className="relative border-t border-[color:var(--landing-border)] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.85rem,4.5vw,2.75rem)] font-semibold tracking-[-0.045em]">
               Try the prototype
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-[16px] leading-relaxed text-white/50">
+            <p className="mx-auto mt-4 max-w-lg text-[16px] leading-relaxed text-[color:var(--landing-faint)]">
               The interactive build is more useful than screenshots for
               evaluating motion, density, and flow.
             </p>
-            <p className="mx-auto mt-3 text-[14px] text-white/40">
-              Demo card PIN <span className="text-white/70">123456</span>
+            <p className="mx-auto mt-3 text-[14px] text-[color:var(--landing-dim)]">
+              Demo card PIN{' '}
+              <span className="text-[color:var(--landing-soft)]">123456</span>
               {' · '}
-              Transport-PIN <span className="text-white/70">12345</span>
+              Transport-PIN{' '}
+              <span className="text-[color:var(--landing-soft)]">12345</span>
             </p>
             <Link
               to={routes.home}
@@ -406,13 +453,13 @@ export function LandingPage() {
         </section>
       </main>
 
-      <footer className="relative z-10 border-t border-white/[0.06] px-5 py-10 sm:px-8">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 text-[13px] leading-relaxed text-white/40 sm:flex-row sm:items-end sm:justify-between">
+      <footer className="relative z-10 border-t border-[color:var(--landing-border)] px-5 py-10 sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 text-[13px] leading-relaxed text-[color:var(--landing-dim)] sm:flex-row sm:items-end sm:justify-between">
           <p className="max-w-xl">
             Unofficial design exploration by{' '}
             <a
               href="https://leonvogler.com"
-              className="text-white/65 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+              className="text-[color:var(--landing-link)] underline decoration-[color:var(--landing-link-underline)] underline-offset-2 transition hover:text-[color:var(--landing-link-hover)]"
               rel="noreferrer"
               target="_blank"
             >
@@ -425,5 +472,42 @@ export function LandingPage() {
         </div>
       </footer>
     </div>
+  )
+}
+
+function SunIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="3.25" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M8 1.5v1.75M8 12.75V14.5M1.5 8h1.75M12.75 8H14.5M3.4 3.4l1.24 1.24M11.36 11.36l1.24 1.24M12.6 3.4l-1.24 1.24M4.64 11.36l-1.24 1.24"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M13.5 9.35A5.75 5.75 0 0 1 6.65 2.5 5.75 5.75 0 1 0 13.5 9.35Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/** Half-filled circle — matches “Automatic / system” appearance. */
+function SystemIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 2.75a5.25 5.25 0 0 1 0 10.5V2.75Z" fill="currentColor" />
+    </svg>
   )
 }
