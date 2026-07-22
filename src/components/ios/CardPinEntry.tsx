@@ -60,28 +60,39 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
       />
 
       <div className="flex min-h-0 flex-1 flex-col px-4">
-        <div className="flex flex-1 flex-col items-center pt-5">
-          <h2
-            className={cn(
-              'headline max-w-[280px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
-              pinError ? 'text-ios-red' : 'text-ios-label',
-            )}
-          >
-            {pinError ? t('pinWrong') : t('pinPrompt')}
-          </h2>
-          {!pinError && attemptsLeft < MAX_ATTEMPTS ? (
-            <p className="mt-2 text-[15px] leading-[20px] text-ios-secondary-label">
-              {t('pinAttempts', { n: attemptsLeft })}
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center">
+          <div className="flex w-full flex-col items-center">
+            <h2
+              className={cn(
+                'headline max-w-[280px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
+                pinError ? 'text-ios-red' : 'text-ios-label',
+              )}
+            >
+              {pinError ? t('pinWrong') : t('pinPrompt')}
+            </h2>
+            {/* Fixed-height note slot — avoids layout shift when attempts appear. */}
+            <p
+              className={cn(
+                'mt-2 min-h-[20px] text-center text-[15px] leading-[20px]',
+                !pinError && attemptsLeft < MAX_ATTEMPTS
+                  ? 'text-ios-secondary-label'
+                  : 'text-transparent',
+              )}
+              aria-hidden={pinError || attemptsLeft >= MAX_ATTEMPTS}
+            >
+              {!pinError && attemptsLeft < MAX_ATTEMPTS
+                ? t('pinAttempts', { n: attemptsLeft })
+                : '\u00a0'}
             </p>
-          ) : null}
 
-          <div className="mt-10 w-full">
-            <PinPad
-              value={pin}
-              onChange={setPin}
-              shake={shake}
-              onComplete={handlePinComplete}
-            />
+            <div className="mt-10 w-full">
+              <PinPad
+                value={pin}
+                onChange={setPin}
+                shake={shake}
+                onComplete={handlePinComplete}
+              />
+            </div>
           </div>
         </div>
 

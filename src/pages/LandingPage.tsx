@@ -2,16 +2,17 @@ import { useEffect, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import {
-  SFCheckmark,
+  SFAlignHorizontalCenter,
   SFCheckmarkShieldFill,
-  SFCreditcard,
+  SFEye,
   SFGearshapeFill,
-  SFInfoCircle,
+  SFGlobe,
+  SFHandTap,
   SFIphone,
+  SFIphoneRadiowavesLeftAndRight,
   SFLockFill,
-  SFMacbook,
   SFPersonBadgeKeyFill,
-  SFWave3Right,
+  SFViewfinder,
   SFWave3RightCircleFill,
 } from '@/components/ios/SF'
 import { routes } from '@/lib/routes'
@@ -39,22 +40,22 @@ const CRITERIA: {
   {
     title: 'Layout discipline',
     body: 'Type, spacing, and alignment are treated as constraints. Screens stay quiet so the current step remains obvious.',
-    Icon: SFCheckmark,
+    Icon: SFAlignHorizontalCenter,
   },
   {
     title: 'Responsive interaction',
     body: 'Transitions are short; taps resolve quickly. Latency in the UI should not add to the cognitive load of authentication.',
-    Icon: SFWave3Right,
+    Icon: SFHandTap,
   },
   {
     title: 'Clarity under load',
     body: 'Consent, PIN entry, and NFC prompts stay scannable. Copy and structure aim for low ambiguity.',
-    Icon: SFInfoCircle,
+    Icon: SFEye,
   },
   {
     title: 'Narrow scope per screen',
     body: 'Identify, pairing, PIN change, and device check each get a focused path without secondary noise.',
-    Icon: SFCreditcard,
+    Icon: SFViewfinder,
   },
   {
     title: 'Presentation as signal',
@@ -76,7 +77,7 @@ const SCOPE: {
   {
     title: 'Phone as card reader',
     body: 'Mac pairing code and standby for remote scan requests.',
-    Icon: SFMacbook,
+    Icon: SFIphoneRadiowavesLeftAndRight,
   },
   {
     title: 'Change PIN',
@@ -96,7 +97,7 @@ const SCOPE: {
   {
     title: 'Localization',
     body: 'German and English across the prototype.',
-    Icon: SFInfoCircle,
+    Icon: SFGlobe,
   },
 ]
 

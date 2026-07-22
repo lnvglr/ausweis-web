@@ -284,46 +284,46 @@ export function ChangePinSettingsPage() {
       />
 
       <div className="flex min-h-0 flex-1 flex-col px-4">
-        <div className="flex flex-1 flex-col items-center pt-5">
-          <p className="text-[13px] font-normal leading-[18px] text-ios-secondary-label">
-            {kind === 'transport'
-              ? t('settingsChangePinTransport')
-              : t('settingsChangePinSix')}
-          </p>
-          <h2
-            className={cn(
-              'headline mt-2 max-w-[300px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
-              error ? 'text-ios-red' : 'text-ios-label',
-            )}
-          >
-            {error
-              ? step === 'confirm'
-                ? t('settingsChangePinMismatch')
-                : t('pinWrong')
-              : title}
-          </h2>
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center">
+          <div className="flex w-full flex-col items-center">
+            <p className="min-h-[18px] text-[13px] font-normal leading-[18px] text-ios-secondary-label">
+              {kind === 'transport'
+                ? t('settingsChangePinTransport')
+                : t('settingsChangePinSix')}
+            </p>
+            <h2
+              className={cn(
+                'headline mt-2 min-h-[22px] max-w-[300px] text-center text-[17px] font-semibold leading-[22px] tracking-[-0.41px]',
+                error ? 'text-ios-red' : 'text-ios-label',
+              )}
+            >
+              {error
+                ? step === 'confirm'
+                  ? t('settingsChangePinMismatch')
+                  : t('pinWrong')
+                : title}
+            </h2>
 
-          <div className="mt-10 w-full">
-            <PinPad
-              key={`${step}-${currentLength}`}
-              value={value}
-              onChange={setValue}
-              length={currentLength}
-              shake={shake}
-              onComplete={onComplete}
-            />
+            <div className="mt-10 w-full">
+              <PinPad
+                key={`${step}-${currentLength}`}
+                value={value}
+                onChange={setValue}
+                length={currentLength}
+                shake={shake}
+                onComplete={onComplete}
+              />
+            </div>
           </div>
         </div>
 
-        {demoHint ? (
-          <div className="safe-bottom pb-5 pt-3 text-center">
-            <p className="text-[13px] leading-[18px] text-ios-tertiary-label">
+        <div className="safe-bottom flex min-h-[18px] items-center justify-center pb-5 pt-3">
+          {demoHint ? (
+            <p className="text-center text-[13px] leading-[18px] text-ios-tertiary-label">
               {demoHint}
             </p>
-          </div>
-        ) : (
-          <div className="safe-bottom pb-5" />
-        )}
+          ) : null}
+        </div>
       </div>
     </div>
   )
