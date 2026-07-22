@@ -98,7 +98,7 @@ const SCOPE: {
   },
   {
     title: 'Localization',
-    body: 'German and English across the prototype.',
+    body: 'German, English, Turkish, Russian, Polish, Ukrainian, and Arabic — with right-to-left layout for Arabic.',
     Icon: SFGlobe,
   },
 ]

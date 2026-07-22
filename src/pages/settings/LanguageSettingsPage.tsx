@@ -3,17 +3,23 @@ import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { SelectionCheck } from '@/components/ios/PageChrome'
 import { useI18n } from '@/i18n/I18nContext'
+import {
+  LOCALE_OPTIONS,
+  type Locale,
+  type TranslationKey,
+} from '@/i18n/translations'
 import { routes } from '@/lib/routes'
-import type { Locale } from '@/i18n/translations'
 
-const languages: {
-  code: Locale
-  labelKey: 'settingsLanguageEn' | 'settingsLanguageDe'
-  native: string
-}[] = [
-  { code: 'en', labelKey: 'settingsLanguageEn', native: 'English' },
-  { code: 'de', labelKey: 'settingsLanguageDe', native: 'Deutsch' },
-]
+const LABEL_KEY: Record<Locale, TranslationKey> = {
+  system: 'settingsLanguageSystem',
+  de: 'settingsLanguageDe',
+  en: 'settingsLanguageEn',
+  tr: 'settingsLanguageTr',
+  ru: 'settingsLanguageRu',
+  pl: 'settingsLanguagePl',
+  uk: 'settingsLanguageUk',
+  ar: 'settingsLanguageAr',
+}
 
 export function LanguageSettingsPage() {
   const { t, locale, setLocale } = useI18n()
@@ -30,15 +36,19 @@ export function LanguageSettingsPage() {
           />
         }
       />
-      <div className="min-h-0 flex-1 overflow-y-auto px-0 pb-8 pt-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-0 py-8">
         <GroupedList header={t('settingsLanguageHeader')}>
-          {languages.map((lang) => {
+          {LOCALE_OPTIONS.map((lang) => {
             const selected = locale === lang.code
+            const subtitle =
+              lang.code === 'system'
+                ? t('settingsLanguageSystemUses')
+                : lang.native
             return (
               <ListRow
                 key={lang.code}
-                title={t(lang.labelKey)}
-                subtitle={lang.native}
+                title={t(LABEL_KEY[lang.code])}
+                subtitle={subtitle}
                 onClick={() => setLocale(lang.code)}
                 trailing={selected ? <SelectionCheck /> : undefined}
               />

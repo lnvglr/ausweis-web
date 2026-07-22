@@ -21,7 +21,21 @@ export function SettingsPage() {
     s.readingMode === 'nfc' ? t('settingsReadingNfc') : t('settingsReadingRemote')
 
   const languageLabel =
-    locale === 'de' ? t('settingsLanguageDe') : t('settingsLanguageEn')
+    locale === 'system'
+      ? t('settingsLanguageSystem')
+      : locale === 'de'
+        ? t('settingsLanguageDe')
+        : locale === 'en'
+          ? t('settingsLanguageEn')
+          : locale === 'tr'
+            ? t('settingsLanguageTr')
+            : locale === 'ru'
+              ? t('settingsLanguageRu')
+              : locale === 'pl'
+                ? t('settingsLanguagePl')
+                : locale === 'uk'
+                  ? t('settingsLanguageUk')
+                  : t('settingsLanguageAr')
 
   return (
     <div className="flex min-h-0 flex-1 flex-col bg-ios-grouped">
