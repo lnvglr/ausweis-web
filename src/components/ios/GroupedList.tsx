@@ -75,6 +75,7 @@ export function ListRow({
   trailing,
   destructive,
   align = 'center',
+  value,
 }: {
   title: string
   subtitle?: string
@@ -85,6 +86,7 @@ export function ListRow({
   trailing?: React.ReactNode
   destructive?: boolean
   align?: 'center' | 'top'
+  value?: string
 }) {
   const Comp = onClick ? 'button' : 'div'
   const topAligned = align === 'top'
@@ -112,7 +114,7 @@ export function ListRow({
           {title}
         </div>
         {subtitle ? (
-          <div className="mt-[3px] text-[15px] leading-[20px] tracking-[-0.24px] text-ios-secondary-label">
+          <div className={cn("mt-[3px] text-[15px] leading-[20px] tracking-[-0.24px] text-ios-secondary-label", value === 'ar' && 'font-[family-name:var(--font-inter-arabic)]')}>
             {subtitle}
           </div>
         ) : null}

@@ -48,6 +48,7 @@ export function LanguageSettingsPage() {
               <ListRow
                 key={lang.code}
                 title={t(LABEL_KEY[lang.code])}
+                value={lang.code}
                 subtitle={subtitle}
                 onClick={() => setLocale(lang.code)}
                 trailing={selected ? <SelectionCheck /> : undefined}
