@@ -24,12 +24,12 @@ export function TabBar() {
 
   return (
     <nav
-      className="pointer-events-none w-full px-6 pt-2 pb-[max(24px,env(safe-area-inset-bottom))] bg-ios-grouped"
+      className="pointer-events-none w-full px-6 pt-2 pb-[max(var(--iphone-17-safe-bottom),env(safe-area-inset-bottom))] bg-ios-grouped"
       aria-label="Tab bar"
     >
       <div
         className={cn(
-          'ios-glass pointer-events-auto mx-auto flex max-w-[430px] items-stretch gap-1 rounded-full p-1.5',
+          'ios-glass pointer-events-auto mx-auto flex max-w-[402px] items-stretch gap-1 rounded-full p-1.5',
         )}
       >
         {tabs.map((tab) => (
@@ -41,7 +41,7 @@ export function TabBar() {
               cn(
                 'flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 py-1.5 transition',
                 isActive
-                  ? 'bg-black/[0.08] text-ios-primary'
+                  ? 'bg-ios-fill text-ios-primary'
                   : 'text-ios-label/80',
               )
             }

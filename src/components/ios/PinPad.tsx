@@ -103,7 +103,7 @@ export function PinPad({
               key={i}
               className={cn(
                 'h-[13px] w-[13px] rounded-full transition-colors duration-100',
-                filled ? 'bg-black' : 'bg-[#d1d1d6]',
+                filled ? 'bg-ios-label' : 'bg-ios-gray4',
                 popIndex === i && !hideKeyAnimations && 'animate-pin-pop',
               )}
             />
@@ -123,8 +123,8 @@ export function PinPad({
               onClick={() => press(key)}
               className={cn(
                 'mx-auto flex h-[75px] w-[75px] items-center justify-center rounded-full',
-                'bg-[#e5e5ea] text-[28px] font-normal leading-none tracking-tight text-black',
-                'transition-colors active:bg-[#d1d1d6] disabled:opacity-40',
+                'bg-ios-gray5 text-[28px] font-normal leading-none tracking-tight text-ios-label',
+                'transition-colors active:bg-ios-gray4 disabled:opacity-40',
               )}
               aria-label={isDelete ? 'Delete' : key}
             >

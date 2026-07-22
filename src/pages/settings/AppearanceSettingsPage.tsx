@@ -1,40 +1,22 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { IOSSwitch } from '@/components/ios/IOSSwitch'
 import { NavBackButton, NavBar } from '@/components/ios/NavBar'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
+import { useColorScheme, usePrefersDark } from '@/hooks/useColorScheme'
 import { routes } from '@/lib/routes'
 import { cn } from '@/lib/cn'
 import { SFCheckmark } from '@/components/ios/SF'
-
-function usePrefersDark() {
-  const [dark, setDark] = useState(() =>
-    typeof window !== 'undefined'
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches
-      : false,
-  )
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => setDark(mq.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-
-  return dark
-}
 
 export function AppearanceSettingsPage() {
   const { t } = useI18n()
   const navigate = useNavigate()
   const { appearance, setAppearance } = useSettings()
   const systemDark = usePrefersDark()
+  const selected = useColorScheme()
 
   const automatic = appearance === 'system'
-  const selected: 'light' | 'dark' =
-    appearance === 'dark' || (automatic && systemDark) ? 'dark' : 'light'
 
   const setAutomatic = (on: boolean) => {
     if (on) {
