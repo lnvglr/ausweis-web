@@ -126,12 +126,11 @@ export function DeviceCheckSettingsPage() {
         cancelLabel={t('nfcCancel')}
         onCancel={() => {
           setSheetOpen(false)
-          nfc.cancel()
           setPhase('idle')
         }}
         onComplete={() => {
-          setSheetOpen(false)
           setPhase('done')
+          setSheetOpen(false)
         }}
       />
     </div>

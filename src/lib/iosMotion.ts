@@ -78,6 +78,15 @@ export const dimVariants: Variants = {
   exit: { opacity: 0 },
 }
 
+/** Parent shell so AnimatePresence waits for nested sheet/dim exits. */
+export const overlayShellVariants: Variants = {
+  hidden: {},
+  visible: {},
+  exit: {
+    transition: { when: 'afterChildren' },
+  },
+}
+
 /** Classic UINavigation push/pop — transform only, slight parallax. */
 export const pushVariants: Variants = {
   initial: (dir: number) => ({

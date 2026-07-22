@@ -5,6 +5,7 @@ import { SFXmark } from '@/components/ios/SF'
 import {
   dimVariants,
   iosSpring,
+  overlayShellVariants,
   sheetVariants,
   withReducedMotion,
 } from '@/lib/iosMotion'
@@ -25,6 +26,8 @@ type Props = {
   cancelLabel: string
   onCancel: () => void
   onComplete?: () => void
+  /** Fires after the sheet has finished animating out. */
+  onClosed?: () => void
 }
 
 const BLUE = '#007AFF'
@@ -32,7 +35,7 @@ const CLOSE_BG = 'var(--color-ios-gray5)'
 
 /**
  * Core NFC sheet — spacing & colors matched to iOS system sheet.
- * Success uses system blue (not green). Auto-closes after 1s on success/error.
+ * Success uses system blue (not green). Auto-closes after 2.5s on success/error.
  */
 export function NfcScanSheet({
   open,
@@ -42,6 +45,7 @@ export function NfcScanSheet({
   cancelLabel,
   onCancel,
   onComplete,
+  onClosed,
 }: Props) {
   const reduced = useReducedMotion() ?? false
   const isError = state.startsWith('error')
@@ -50,8 +54,10 @@ export function NfcScanSheet({
 
   const onCancelRef = useRef(onCancel)
   const onCompleteRef = useRef(onComplete)
+  const onClosedRef = useRef(onClosed)
   onCancelRef.current = onCancel
   onCompleteRef.current = onComplete
+  onClosedRef.current = onClosed
 
   useEffect(() => {
     if (!open) return
@@ -60,29 +66,31 @@ export function NfcScanSheet({
     const id = window.setTimeout(() => {
       if (state === 'success') onCompleteRef.current?.()
       else onCancelRef.current()
-    }, 1000)
+    }, 2500)
 
     return () => window.clearTimeout(id)
   }, [open, state])
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={() => onClosedRef.current?.()}>
       {open ? (
-        <div
-          className="absolute inset-0 z-50 flex items-end justify-center pt-12"
+        <motion.div
+          key="nfc-sheet"
+          className="absolute inset-0 z-[100] flex items-end justify-center pt-12"
           role="dialog"
           aria-modal="true"
           aria-labelledby="nfc-sheet-title"
           aria-describedby="nfc-sheet-body"
+          variants={overlayShellVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
           <motion.button
             type="button"
             aria-label={cancelLabel}
             className="absolute inset-0 bg-black/45"
             variants={dimVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
             transition={withReducedMotion(reduced, {
               ...iosSpring.soft,
               duration: reduced ? 0.01 : 0.28,
@@ -93,9 +101,6 @@ export function NfcScanSheet({
           <motion.div
             className="relative w-full rounded-t-[var(--radius-ios-sheet)] bg-ios-card px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-7 shadow-[0_-8px_40px_rgba(0,0,0,0.18)]"
             variants={sheetVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
             transition={withReducedMotion(reduced, iosSpring.sheet)}
             drag={isBusy ? 'y' : false}
             dragConstraints={{ top: 0, bottom: 0 }}
@@ -185,7 +190,7 @@ export function NfcScanSheet({
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       ) : null}
     </AnimatePresence>
   )
@@ -194,34 +199,23 @@ export function NfcScanSheet({
 function PhoneGlyph({ reading }: { reading: boolean }) {
   return (
     <svg
-      width="48"
-      height="78"
-      viewBox="0 0 54 88"
+      width="100"
+      viewBox="0 0 54 50"
       fill="none"
       aria-hidden
-      className={cn(reading && 'animate-pulse')}
+      className={cn("mt-5", reading && 'animate-pulse')}
     >
       <rect
         x="4"
         y="2"
         width="46"
         height="84"
-        rx="10"
-        stroke={BLUE}
-        strokeWidth="3.2"
-        fill="white"
-      />
-      <rect x="18" y="8" width="18" height="5" rx="2.5" fill={BLUE} />
-      <rect
-        x="12"
-        y="22"
-        width="30"
-        height="46"
-        rx="3"
+        rx="8"
         stroke={BLUE}
         strokeWidth="2"
-        fill="#E8F1FF"
+        fill="transparent"
       />
+      <rect x="18" y="8" width="18" height="3" rx="1.5" fill={BLUE} />
     </svg>
   )
 }
@@ -236,7 +230,7 @@ function SuccessMark() {
         r="70"
         stroke={BLUE}
         strokeWidth="7"
-        fill="white"
+        fill="transparent"
       />
       <path
         d="M44 78.5 66 100l44-52"
@@ -258,7 +252,7 @@ function ErrorMark() {
         r="70"
         stroke="#FF3B30"
         strokeWidth="7"
-        fill="white"
+        fill="transparent"
       />
       <path
         d="M76 46v40M76 108.5h.01"

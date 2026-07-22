@@ -81,7 +81,7 @@ export function useNfcSimulation({
   useEffect(() => {
     if (!open) {
       clearTimers()
-      setState('ready')
+      // Keep success/error copy during the sheet exit animation.
       return clearTimers
     }
     if (manual) {
