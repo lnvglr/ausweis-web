@@ -31,14 +31,24 @@ export function LandingPage() {
         >
           AusweisApp
         </a>
-        <a
-          href="https://github.com/lnvglr/ausweis-web"
-          className="text-[13px] font-medium text-white/55 transition hover:text-white"
-          rel="noreferrer"
-          target="_blank"
-        >
-          GitHub
-        </a>
+        <nav className="flex items-center gap-5">
+          <a
+            href="https://leonvogler.com"
+            className="text-[13px] font-medium text-white/55 transition hover:text-white"
+            rel="noreferrer"
+            target="_blank"
+          >
+            leonvogler.com
+          </a>
+          <a
+            href="https://github.com/lnvglr/ausweis-web"
+            className="text-[13px] font-medium text-white/55 transition hover:text-white"
+            rel="noreferrer"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </nav>
       </header>
 
       <main id="top" className="relative z-10">
@@ -254,8 +264,17 @@ export function LandingPage() {
       <footer className="relative z-10 border-t border-white/[0.06] px-5 py-10 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 text-[13px] leading-relaxed text-white/40 sm:flex-row sm:items-end sm:justify-between">
           <p className="max-w-xl">
-            Unofficial design exploration. AusweisApp and related trademarks
-            belong to their respective owners. MIT-licensed source on GitHub.
+            Unofficial design exploration by{' '}
+            <a
+              href="https://leonvogler.com"
+              className="text-white/65 underline decoration-white/20 underline-offset-2 transition hover:text-white"
+              rel="noreferrer"
+              target="_blank"
+            >
+              Leon Vogler
+            </a>
+            . AusweisApp and related trademarks belong to their respective
+            owners. MIT-licensed source on GitHub.
           </p>
           <p className="shrink-0">© {new Date().getFullYear()} redesign proposal</p>
         </div>
