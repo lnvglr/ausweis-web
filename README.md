@@ -18,9 +18,13 @@ A React web prototype of the German AusweisApp mobile flows: online identificati
 | --- | --- |
 | ![Settings](docs/screenshots/04-settings.png) | ![Change PIN](docs/screenshots/05-change-pin.png) |
 
-| Help |
-| --- |
-| ![Help](docs/screenshots/06-help.png) |
+| Help | NFC scan |
+| --- | --- |
+| ![Help](docs/screenshots/06-help.png) | ![NFC scan](docs/screenshots/08-nfc-scan.png) |
+
+| NFC success | Check complete |
+| --- | --- |
+| ![NFC success](docs/screenshots/09-nfc-success.png) | ![Check complete](docs/screenshots/10-check-success.png) |
 
 ## What this explores
 
