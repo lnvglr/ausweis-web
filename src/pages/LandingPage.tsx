@@ -1,6 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, type ComponentType } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
+import {
+  SFCheckmark,
+  SFCheckmarkShieldFill,
+  SFCreditcard,
+  SFGearshapeFill,
+  SFInfoCircle,
+  SFIphone,
+  SFLockFill,
+  SFMacbook,
+  SFPersonBadgeKeyFill,
+  SFWave3Right,
+  SFWave3RightCircleFill,
+} from '@/components/ios/SF'
 import { routes } from '@/lib/routes'
 
 const asset = (file: string) =>
@@ -10,6 +23,109 @@ const fades = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0 },
 }
+
+type Icon = ComponentType<{ size?: number; className?: string; 'aria-hidden'?: boolean }>
+
+const CRITERIA: {
+  title: string
+  body: string
+  Icon: Icon
+}[] = [
+  {
+    title: 'Platform literacy',
+    body: 'Navigation, sheets, lists, and controls follow iOS patterns so the app reads as native rather than a generic web form.',
+    Icon: SFIphone,
+  },
+  {
+    title: 'Layout discipline',
+    body: 'Type, spacing, and alignment are treated as constraints. Screens stay quiet so the current step remains obvious.',
+    Icon: SFCheckmark,
+  },
+  {
+    title: 'Responsive interaction',
+    body: 'Transitions are short; taps resolve quickly. Latency in the UI should not add to the cognitive load of authentication.',
+    Icon: SFWave3Right,
+  },
+  {
+    title: 'Clarity under load',
+    body: 'Consent, PIN entry, and NFC prompts stay scannable. Copy and structure aim for low ambiguity.',
+    Icon: SFInfoCircle,
+  },
+  {
+    title: 'Narrow scope per screen',
+    body: 'Identify, pairing, PIN change, and device check each get a focused path without secondary noise.',
+    Icon: SFCreditcard,
+  },
+  {
+    title: 'Presentation as signal',
+    body: 'For authenticators, an unfinished-looking UI is a trust problem. The prototype treats finish quality as part of the UX.',
+    Icon: SFCheckmarkShieldFill,
+  },
+]
+
+const SCOPE: {
+  title: string
+  body: string
+  Icon: Icon
+}[] = [
+  {
+    title: 'Identify online',
+    body: 'Provider consent, NFC sheet, card PIN, success.',
+    Icon: SFPersonBadgeKeyFill,
+  },
+  {
+    title: 'Phone as card reader',
+    body: 'Mac pairing code and standby for remote scan requests.',
+    Icon: SFMacbook,
+  },
+  {
+    title: 'Change PIN',
+    body: 'Select 6-digit, Transport-PIN, or no PIN, then enter.',
+    Icon: SFLockFill,
+  },
+  {
+    title: 'Device & ID check',
+    body: 'Simulated NFC check that the phone can reach the card.',
+    Icon: SFWave3RightCircleFill,
+  },
+  {
+    title: 'Settings & help',
+    body: 'Language, appearance, pairings, and help pages.',
+    Icon: SFGearshapeFill,
+  },
+  {
+    title: 'Localization',
+    body: 'German and English across the prototype.',
+    Icon: SFInfoCircle,
+  },
+]
+
+/** A few states that carry the argument — not a gallery. */
+const HIGHLIGHTS: {
+  file: string
+  title: string
+  body: string
+  alt: string
+}[] = [
+  {
+    file: '02-identify-consent.png',
+    title: 'Consent before the card',
+    body: 'Provider context and requested data stay readable. Hierarchy does the work instead of decorative chrome.',
+    alt: 'Identify consent screen listing requested personal data',
+  },
+  {
+    file: '08-nfc-scan.png',
+    title: 'NFC as a system sheet',
+    body: 'Scanning uses a familiar bottom sheet and short feedback. Authentication should feel like platform UI, not a custom dialog.',
+    alt: 'NFC scan sheet prompting to place the ID card',
+  },
+  {
+    file: '07-pair-mac.png',
+    title: 'Pairing without clutter',
+    body: 'One job on screen: show a code, wait, continue. Ordinary flows still need finish quality if the product is asking for trust.',
+    alt: 'Mac pairing screen showing a pairing code',
+  },
+]
 
 export function LandingPage() {
   const reduceMotion = useReducedMotion()
@@ -181,35 +297,51 @@ export function LandingPage() {
               Assumptions this prototype is built against.
             </p>
 
-            <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  title: 'Platform literacy',
-                  body: 'Navigation, sheets, lists, and controls follow iOS patterns so the app reads as native rather than a generic web form.',
-                },
-                {
-                  title: 'Layout discipline',
-                  body: 'Type, spacing, and alignment are treated as constraints. Screens stay quiet so the current step remains obvious.',
-                },
-                {
-                  title: 'Responsive interaction',
-                  body: 'Transitions are short; taps resolve quickly. Latency in the UI should not add to the cognitive load of authentication.',
-                },
-                {
-                  title: 'Clarity under load',
-                  body: 'Consent, PIN entry, and NFC prompts stay scannable. Copy and structure aim for low ambiguity.',
-                },
-                {
-                  title: 'Narrow scope per screen',
-                  body: 'Identify, pairing, PIN change, and device check each get a focused path without secondary noise.',
-                },
-                {
-                  title: 'Presentation as signal',
-                  body: 'For authenticators, an unfinished-looking UI is a trust problem. The prototype treats finish quality as part of the UX.',
-                },
-              ].map((item) => (
-                <li key={item.title} className="border-t border-white/10 pt-5">
+            <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {CRITERIA.map(({ title, body, Icon }) => (
+                <li key={title} className="border-t border-white/10 pt-5">
+                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/[0.06] text-[#6eb6ff]">
+                    <Icon size={18} aria-hidden />
+                  </span>
                   <h3 className="text-[17px] font-semibold tracking-[-0.02em]">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-white/48">
+                    {body}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Evidence: a few screens that carry the thesis */}
+        <section className="relative border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
+              In practice
+            </h2>
+            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
+              Three moments from the prototype that show what the redesign is
+              arguing for — calm hierarchy, platform-native chrome, and one job
+              per screen.
+            </p>
+
+            <ul className="mt-14 grid gap-12 lg:grid-cols-3 lg:gap-8">
+              {HIGHLIGHTS.map((item) => (
+                <li key={item.file} className="flex flex-col">
+                  <figure className="landing-highlight">
+                    <img
+                      src={asset(item.file)}
+                      alt={item.alt}
+                      width={1456}
+                      height={2008}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto w-full"
+                    />
+                  </figure>
+                  <h3 className="mt-5 text-[17px] font-semibold tracking-[-0.02em]">
                     {item.title}
                   </h3>
                   <p className="mt-2 text-[14px] leading-relaxed text-white/48">
@@ -231,85 +363,21 @@ export function LandingPage() {
               No real eID, NFC hardware, or personal data.
             </p>
 
-            <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  title: 'Identify online',
-                  body: 'Provider consent, NFC sheet, card PIN, success.',
-                },
-                {
-                  title: 'Phone as card reader',
-                  body: 'Mac pairing code and standby for remote scan requests.',
-                },
-                {
-                  title: 'Change PIN',
-                  body: 'Select 6-digit, Transport-PIN, or no PIN, then enter.',
-                },
-                {
-                  title: 'Device & ID check',
-                  body: 'Simulated NFC check that the phone can reach the card.',
-                },
-                {
-                  title: 'Settings & help',
-                  body: 'Language, appearance, pairings, and help pages.',
-                },
-                {
-                  title: 'Localization',
-                  body: 'German and English across the prototype.',
-                },
-              ].map((item) => (
-                <li key={item.title} className="border-t border-white/10 pt-5">
+            <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {SCOPE.map(({ title, body, Icon }) => (
+                <li key={title} className="border-t border-white/10 pt-5">
+                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/[0.06] text-white/70">
+                    <Icon size={18} aria-hidden />
+                  </span>
                   <h3 className="text-[17px] font-semibold tracking-[-0.02em]">
-                    {item.title}
+                    {title}
                   </h3>
                   <p className="mt-2 text-[14px] leading-relaxed text-white/48">
-                    {item.body}
+                    {body}
                   </p>
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden border-t border-white/[0.06] px-5 py-20 sm:px-8 sm:py-28">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="font-[family-name:var(--font-landing-display)] text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.04em]">
-              Screens
-            </h2>
-            <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/50">
-              Representative states from the prototype: consent, NFC, pairing,
-              PIN, and settings.
-            </p>
-          </div>
-
-          <div className="landing-marquee mt-14">
-            <div className="landing-marquee-track">
-              {[
-                '02-identify-consent.png',
-                '08-nfc-scan.png',
-                '07-pair-mac.png',
-                '04-settings.png',
-                '05-change-pin.png',
-                '09-nfc-success.png',
-                '02-identify-consent.png',
-                '08-nfc-scan.png',
-                '07-pair-mac.png',
-                '04-settings.png',
-                '05-change-pin.png',
-                '09-nfc-success.png',
-              ].map((file, i) => (
-                <figure key={`${file}-${i}`} className="landing-shot">
-                  <img
-                    src={asset(file)}
-                    alt=""
-                    width={1456}
-                    height={2008}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              ))}
-            </div>
           </div>
         </section>
 
