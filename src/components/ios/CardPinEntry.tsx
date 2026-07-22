@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { PinPad } from '@/components/ios/PinPad'
 import { NavBackButton } from '@/components/ios/NavBar'
 import { ScreenTopBar } from '@/components/ios/PageChrome'
+import { useDemoPinHint } from '@/context/DemoDirectorContext'
 import { useSettings } from '@/context/SettingsContext'
 import { PinInfoPage } from '@/pages/PinInfoPage'
 import { useI18n } from '@/i18n/I18nContext'
@@ -23,6 +24,8 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
   const [attemptsLeft, setAttemptsLeft] = useState(MAX_ATTEMPTS)
   const [shake, setShake] = useState(false)
   const [pinError, setPinError] = useState(false)
+
+  useDemoPinHint(showHelp ? null : t('demoPinHint', { pin: cardPin }))
 
   const handlePinComplete = useCallback(
     (value: string) => {
@@ -54,7 +57,7 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
   }
 
   return (
-    <div className="relative flex min-h-0 flex-1 flex-col bg-white">
+    <div className="relative flex min-h-0 flex-1 flex-col bg-ios-card">
       <ScreenTopBar
         left={<NavBackButton label={t('commonCancel')} onClick={onCancel} />}
       />
@@ -96,7 +99,7 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
           </div>
         </div>
 
-        <div className="safe-bottom flex min-h-11 flex-col items-center justify-center gap-2 pb-5 pt-3">
+        <div className="safe-bottom flex min-h-11 flex-col items-center justify-center pb-5 pt-3">
           <button
             type="button"
             onClick={() => setShowHelp(true)}
@@ -104,9 +107,6 @@ export function CardPinEntry({ onCancel, onSuccess, onLocked }: Props) {
           >
             {t('pinWhatIs')}
           </button>
-          <p className="text-[13px] leading-[18px] text-ios-tertiary-label">
-            {t('demoPinHint', { pin: cardPin })}
-          </p>
         </div>
       </div>
     </div>

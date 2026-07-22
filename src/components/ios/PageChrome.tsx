@@ -60,7 +60,7 @@ export function StickyActions({
   return (
     <div
       className={cn(
-        'safe-bottom shrink-0 border-t border-ios-separator/60 bg-ios-grouped/90 px-4 pb-3 pt-3 backdrop-blur-xl',
+        'safe-bottom shrink-0 border-t border-ios-separator/60 bg-ios-grouped/90 px-4 pb-3 pt-3 backdrop-blur-xl rounded-b-[var(--iphone-17-radius)]',
         className,
       )}
     >

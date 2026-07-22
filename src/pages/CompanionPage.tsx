@@ -11,19 +11,17 @@ import {
   StatusScreen,
 } from '@/components/ios/PageChrome'
 import { SFCheckmark, SFMacbook } from '@/components/ios/SF'
+import type { DemoAction } from '@/context/DemoDirectorContext'
+import { useDemoActions } from '@/context/DemoDirectorContext'
 import { usePairings } from '@/context/PairingsContext'
 import { useI18n } from '@/i18n/I18nContext'
 import { cn } from '@/lib/cn'
-import { routes } from '@/lib/routes'
+import { demoRelativePath, routes } from '@/lib/routes'
 
 type Mode = 'pair' | 'use'
 type Phase = 'code' | 'ready' | 'pin' | 'done'
 
 const CODE_LENGTH = 4
-/** Demo: Mac enters the pairing code shown on this phone. */
-const PAIRING_COMPLETE_DELAY_MS = 3500
-/** Demo: Mac requests a card read after the phone is ready. */
-const MAC_REQUEST_DELAY_MS = 2800
 
 type LocationState = {
   quick?: boolean
@@ -38,6 +36,7 @@ export function CompanionPage() {
   const state = (location.state as LocationState | null) ?? null
   const mode: Mode = state?.mode === 'pair' ? 'pair' : 'use'
   const returnTo = state?.returnTo
+  const companionActive = demoRelativePath(location.pathname) === '/companion'
 
   const {
     devices,
@@ -53,8 +52,6 @@ export function CompanionPage() {
   const [phase, setPhase] = useState<Phase>(() =>
     needsPairing ? 'code' : 'ready',
   )
-  /** Only auto-demo a Mac scan request after a fresh pairing, not on every ready visit. */
-  const [demoScanPending, setDemoScanPending] = useState(false)
   const [pairedName, setPairedName] = useState(
     () => primaryDevice?.name ?? t('companionNewDeviceName'),
   )
@@ -70,43 +67,56 @@ export function CompanionPage() {
     if (primaryDevice) setPairedName(primaryDevice.name)
   }, [phase, devices.length, primaryDevice, setReaderReady])
 
-  // After a fresh pairing, simulate an incoming Mac scan request → PIN.
-  useEffect(() => {
-    if (phase !== 'ready' || !demoScanPending || !readerReady) return
-    const id = window.setTimeout(() => {
-      setDemoScanPending(false)
-      setPhase('pin')
-    }, MAC_REQUEST_DELAY_MS)
-    return () => window.clearTimeout(id)
-  }, [phase, demoScanPending, readerReady])
+  const completePairingFromMac = useCallback(() => {
+    const device = addDevice({
+      name: t('companionNewDeviceName'),
+      platform: 'macOS',
+    })
+    setPairedName(device.name)
+    setReaderReady(true)
+    if (returnTo) {
+      navigate(-1)
+      return
+    }
+    setPhase('ready')
+  }, [addDevice, t, setReaderReady, returnTo, navigate])
 
-  // Demo: Mac enters the displayed code after a short wait.
-  useEffect(() => {
-    if (phase !== 'code') return
-    const id = window.setTimeout(() => {
-      const device = addDevice({
-        name: t('companionNewDeviceName'),
-        platform: 'macOS',
-      })
-      setPairedName(device.name)
-      setReaderReady(true)
-      if (returnTo) {
-        // Pop back to the screen that started pairing (correct back animation).
-        navigate(-1)
-        return
-      }
-      setDemoScanPending(true)
-      setPhase('ready')
-    }, PAIRING_COMPLETE_DELAY_MS)
-    return () => window.clearTimeout(id)
-  }, [phase, addDevice, t, setReaderReady, returnTo, navigate])
+  const requestCardReadFromMac = useCallback(() => {
+    if (!readerReady) return
+    setPhase('pin')
+  }, [readerReady])
 
   const openManagePairings = useCallback(() => {
-    setDemoScanPending(false)
     navigate(routes.pairings, {
       state: { from: 'companion' },
     })
   }, [navigate])
+
+  const demoActions = useMemo((): DemoAction[] => {
+    if (phase === 'code') {
+      return [
+        {
+          id: 'mac-enter-code',
+          label: 'Mac entered pairing code',
+          detail: 'Complete pairing from desktop',
+          run: completePairingFromMac,
+        },
+      ]
+    }
+    if (phase === 'ready' && readerReady) {
+      return [
+        {
+          id: 'mac-card-request',
+          label: 'Mac requests card read',
+          detail: 'Incoming scan from paired Mac',
+          run: requestCardReadFromMac,
+        },
+      ]
+    }
+    return []
+  }, [phase, readerReady, completePairingFromMac, requestCardReadFromMac])
+
+  useDemoActions(demoActions, companionActive)
 
   if (phase === 'pin') {
     return (
@@ -120,7 +130,7 @@ export function CompanionPage() {
 
   if (phase === 'code') {
     return (
-      <div className="relative flex min-h-0 flex-1 flex-col bg-white">
+      <div className="relative flex min-h-0 flex-1 flex-col bg-ios-card">
         <ScreenTopBar
           left={
             <NavBackButton label={t('commonCancel')} onClick={goBack} />

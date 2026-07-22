@@ -1,17 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { NfcSheetState } from '@/components/ios/NfcScanSheet'
 
 type Options = {
-  /** Chance (0-1) that the card is "moved away" during reading */
-  moveAwayChance?: number
   open: boolean
   onSuccess?: () => void
+  /**
+   * When true (default), sheet stays on ready until
+   * placeCard / fail* is called from demo controls.
+   */
+  manual?: boolean
 }
 
 export function useNfcSimulation({
   open,
   onSuccess,
-  moveAwayChance = 0.12,
+  manual = true,
 }: Options) {
   const [state, setState] = useState<NfcSheetState>('ready')
   const timers = useRef<number[]>([])
@@ -23,32 +26,34 @@ export function useNfcSimulation({
     timers.current = []
   }, [])
 
-  const start = useCallback(() => {
+  const finishSuccess = useCallback(() => {
+    setState('success')
+    onSuccessRef.current?.()
+  }, [])
+
+  const placeCard = useCallback(() => {
     clearTimers()
-    setState('ready')
+    setState('reading')
+    const id = window.setTimeout(() => {
+      finishSuccess()
+    }, 1400 + Math.random() * 600)
+    timers.current.push(id)
+  }, [clearTimers, finishSuccess])
 
-    const readingId = window.setTimeout(() => {
-      setState('reading')
+  const failMoved = useCallback(() => {
+    clearTimers()
+    setState('error-moved')
+  }, [clearTimers])
 
-      const outcomeId = window.setTimeout(() => {
-        const roll = Math.random()
-        if (roll < moveAwayChance) {
-          setState('error-moved')
-          return
-        }
-        if (roll < moveAwayChance + 0.06) {
-          setState('error-timeout')
-          return
-        }
-        setState('success')
-        onSuccessRef.current?.()
-      }, 1600 + Math.random() * 900)
+  const failTimeout = useCallback(() => {
+    clearTimers()
+    setState('error-timeout')
+  }, [clearTimers])
 
-      timers.current.push(outcomeId)
-    }, 900)
-
-    timers.current.push(readingId)
-  }, [clearTimers, moveAwayChance])
+  const failGeneric = useCallback(() => {
+    clearTimers()
+    setState('error-generic')
+  }, [clearTimers])
 
   const cancel = useCallback(() => {
     clearTimers()
@@ -56,22 +61,57 @@ export function useNfcSimulation({
   }, [clearTimers])
 
   const retry = useCallback(() => {
-    start()
-  }, [start])
-
-  const failGeneric = useCallback(() => {
     clearTimers()
-    setState('error-generic')
+    setState('ready')
   }, [clearTimers])
 
+  const startAuto = useCallback(() => {
+    clearTimers()
+    setState('ready')
+    const readingId = window.setTimeout(() => {
+      setState('reading')
+      const outcomeId = window.setTimeout(() => {
+        finishSuccess()
+      }, 1600)
+      timers.current.push(outcomeId)
+    }, 900)
+    timers.current.push(readingId)
+  }, [clearTimers, finishSuccess])
+
   useEffect(() => {
-    if (open) start()
-    else {
+    if (!open) {
       clearTimers()
       setState('ready')
+      return clearTimers
     }
+    if (manual) {
+      clearTimers()
+      setState('ready')
+      return clearTimers
+    }
+    startAuto()
     return clearTimers
-  }, [open, start, clearTimers])
+  }, [open, manual, clearTimers, startAuto])
 
-  return { state, setState, cancel, retry, failGeneric }
+  return useMemo(
+    () => ({
+      state,
+      setState,
+      placeCard,
+      failMoved,
+      failTimeout,
+      failGeneric,
+      cancel,
+      retry,
+    }),
+    [
+      state,
+      placeCard,
+      failMoved,
+      failTimeout,
+      failGeneric,
+      cancel,
+      retry,
+    ],
+  )
 }

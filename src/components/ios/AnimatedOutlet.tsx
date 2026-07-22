@@ -12,7 +12,12 @@ import { cn } from '@/lib/cn'
 import { demoRelativePath } from '@/lib/routes'
 
 const TAB_PATHS = new Set(['/', '/settings'])
-const FLOW_PATHS = new Set(['/identify', '/companion', '/privacy'])
+const FLOW_PATHS = new Set([
+  '/identify',
+  '/personal-data',
+  '/companion',
+  '/privacy',
+])
 
 function stackDepth(pathname: string) {
   if (pathname === '/privacy' || pathname.startsWith('/settings/help/')) return 2

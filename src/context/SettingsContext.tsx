@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -38,29 +39,81 @@ type Settings = {
   setDetectScreenRecording: (v: boolean) => void
   deviceName: string
   setDeviceName: (v: string) => void
-  resetDemo: () => void
+  /** Bump to remount demo UI after a full reset. */
   resetToken: number
+  /** Restore settings defaults and bump resetToken. */
+  resetSettings: () => void
 }
 
 const SettingsContext = createContext<Settings | null>(null)
 
+const DEFAULTS = {
+  cardPin: '123456',
+  haptics: true,
+  useSystemFont: true,
+  appearance: 'system' as Appearance,
+  readingMode: 'nfc' as ReadingMode,
+  imagesInsteadOfAnimations: false,
+  hidePinKeyAnimations: true,
+  manualProviderRedirect: false,
+  pinOnThisDevice: true,
+  showAuthOnThisDevice: false,
+  randomizeKeys: false,
+  hideKeyAnimations: true,
+  detectScreenRecording: true,
+  deviceName: 'iPhone',
+}
+
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const [cardPin, setCardPin] = useState('123456')
-  const [haptics, setHaptics] = useState(true)
-  const [useSystemFont, setUseSystemFont] = useState(true)
-  const [appearance, setAppearance] = useState<Appearance>('system')
-  const [readingMode, setReadingMode] = useState<ReadingMode>('nfc')
-  const [imagesInsteadOfAnimations, setImagesInsteadOfAnimations] =
-    useState(false)
-  const [hidePinKeyAnimations, setHidePinKeyAnimations] = useState(true)
-  const [manualProviderRedirect, setManualProviderRedirect] = useState(false)
-  const [pinOnThisDevice, setPinOnThisDevice] = useState(true)
-  const [showAuthOnThisDevice, setShowAuthOnThisDevice] = useState(false)
-  const [randomizeKeys, setRandomizeKeys] = useState(false)
-  const [hideKeyAnimations, setHideKeyAnimations] = useState(true)
-  const [detectScreenRecording, setDetectScreenRecording] = useState(true)
-  const [deviceName, setDeviceName] = useState('iPhone')
+  const [cardPin, setCardPin] = useState(DEFAULTS.cardPin)
+  const [haptics, setHaptics] = useState(DEFAULTS.haptics)
+  const [useSystemFont, setUseSystemFont] = useState(DEFAULTS.useSystemFont)
+  const [appearance, setAppearance] = useState<Appearance>(DEFAULTS.appearance)
+  const [readingMode, setReadingMode] = useState<ReadingMode>(
+    DEFAULTS.readingMode,
+  )
+  const [imagesInsteadOfAnimations, setImagesInsteadOfAnimations] = useState(
+    DEFAULTS.imagesInsteadOfAnimations,
+  )
+  const [hidePinKeyAnimations, setHidePinKeyAnimations] = useState(
+    DEFAULTS.hidePinKeyAnimations,
+  )
+  const [manualProviderRedirect, setManualProviderRedirect] = useState(
+    DEFAULTS.manualProviderRedirect,
+  )
+  const [pinOnThisDevice, setPinOnThisDevice] = useState(
+    DEFAULTS.pinOnThisDevice,
+  )
+  const [showAuthOnThisDevice, setShowAuthOnThisDevice] = useState(
+    DEFAULTS.showAuthOnThisDevice,
+  )
+  const [randomizeKeys, setRandomizeKeys] = useState(DEFAULTS.randomizeKeys)
+  const [hideKeyAnimations, setHideKeyAnimations] = useState(
+    DEFAULTS.hideKeyAnimations,
+  )
+  const [detectScreenRecording, setDetectScreenRecording] = useState(
+    DEFAULTS.detectScreenRecording,
+  )
+  const [deviceName, setDeviceName] = useState(DEFAULTS.deviceName)
   const [resetToken, setResetToken] = useState(0)
+
+  const resetSettings = useCallback(() => {
+    setCardPin(DEFAULTS.cardPin)
+    setHaptics(DEFAULTS.haptics)
+    setUseSystemFont(DEFAULTS.useSystemFont)
+    setAppearance(DEFAULTS.appearance)
+    setReadingMode(DEFAULTS.readingMode)
+    setImagesInsteadOfAnimations(DEFAULTS.imagesInsteadOfAnimations)
+    setHidePinKeyAnimations(DEFAULTS.hidePinKeyAnimations)
+    setManualProviderRedirect(DEFAULTS.manualProviderRedirect)
+    setPinOnThisDevice(DEFAULTS.pinOnThisDevice)
+    setShowAuthOnThisDevice(DEFAULTS.showAuthOnThisDevice)
+    setRandomizeKeys(DEFAULTS.randomizeKeys)
+    setHideKeyAnimations(DEFAULTS.hideKeyAnimations)
+    setDetectScreenRecording(DEFAULTS.detectScreenRecording)
+    setDeviceName(DEFAULTS.deviceName)
+    setResetToken((n) => n + 1)
+  }, [])
 
   const value = useMemo(
     () => ({
@@ -93,7 +146,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       deviceName,
       setDeviceName,
       resetToken,
-      resetDemo: () => setResetToken((n) => n + 1),
+      resetSettings,
     }),
     [
       cardPin,
@@ -111,6 +164,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       detectScreenRecording,
       deviceName,
       resetToken,
+      resetSettings,
     ],
   )
 

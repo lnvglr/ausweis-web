@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { CardPinEntry } from '@/components/ios/CardPinEntry'
 import { GroupedList, ListRow } from '@/components/ios/GroupedList'
 import { IOSButton } from '@/components/ios/IOSButton'
@@ -12,32 +12,27 @@ import {
   StickyActions,
 } from '@/components/ios/PageChrome'
 import { SFCheckmark } from '@/components/ios/SF'
-import { useAuthRequest } from '@/context/AuthRequestContext'
 import { useNfcDemoActions } from '@/hooks/useNfcDemoActions'
 import { useNfcSimulation } from '@/hooks/useNfcSimulation'
 import { useI18n } from '@/i18n/I18nContext'
-import { AUTH_REQUESTS } from '@/lib/authRequests'
+import {
+  PERSONAL_DATA_DEMO_VALUES,
+  PERSONAL_DATA_FIELDS,
+} from '@/lib/personalData'
 import { routes } from '@/lib/routes'
 
-type Step = 'consent' | 'scan' | 'pin' | 'done' | 'failed'
+type Step = 'intro' | 'scan' | 'pin' | 'results' | 'failed'
 
-const FALLBACK_REQUEST = AUTH_REQUESTS['weinkeller-mobile']
-
-export function IdentifyPage() {
+export function PersonalDataPage() {
   const { t } = useI18n()
   const navigate = useNavigate()
-  const { pendingDefinition, clearAuthRequest } = useAuthRequest()
-  const request = pendingDefinition ?? FALLBACK_REQUEST
-  const [step, setStep] = useState<Step>('consent')
+  const [step, setStep] = useState<Step>('intro')
   const [sheetOpen, setSheetOpen] = useState(false)
 
   const nfc = useNfcSimulation({ open: sheetOpen })
   useNfcDemoActions(sheetOpen, nfc.state, nfc)
 
-  const leaveIdentify = (toHome = true) => {
-    clearAuthRequest()
-    if (toHome) navigate(routes.home)
-  }
+  const leave = () => navigate(routes.home)
 
   useEffect(() => {
     if (step === 'scan') setSheetOpen(true)
@@ -60,18 +55,17 @@ export function IdentifyPage() {
     }
   }, [nfc.state, t])
 
+  const fieldValue = (key: (typeof PERSONAL_DATA_FIELDS)[number]) => {
+    if (key === 'identifyDataAgeOver18') return t('personalDataAgeYes')
+    return PERSONAL_DATA_DEMO_VALUES[key] ?? '—'
+  }
+
   if (step === 'pin') {
     return (
       <CardPinEntry
-        onCancel={() => leaveIdentify()}
-        onSuccess={() => {
-          clearAuthRequest()
-          setStep('done')
-        }}
-        onLocked={() => {
-          clearAuthRequest()
-          setStep('failed')
-        }}
+        onCancel={leave}
+        onSuccess={() => setStep('results')}
+        onLocked={() => setStep('failed')}
       />
     )
   }
@@ -79,65 +73,44 @@ export function IdentifyPage() {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col bg-ios-grouped">
       <NavBar
-        title={t('identifyTitle')}
+        title={t('personalDataTitle')}
         left={
           <NavBackButton
-            label={t('commonCancel')}
-            onClick={() => leaveIdentify()}
+            label={step === 'results' ? t('commonBack') : t('commonCancel')}
+            onClick={leave}
           />
         }
       />
 
       <div className="flex min-h-0 flex-1 flex-col">
-        {step === 'consent' && (
+        {step === 'intro' && (
           <div className="flex min-h-0 flex-1 flex-col">
             <div className="min-h-0 flex-1 overflow-y-auto">
               <PageIntro
-                title={t('identifyConsentTitle')}
-                body={t('identifyConsentBody')}
+                title={t('personalDataIntroTitle')}
+                body={t('personalDataIntroBody')}
               />
 
-              <GroupedList header={t('identifyProvider')} className="mt-8">
-                <ListRow
-                  title={t(request.providerName)}
-                  subtitle={t(request.purpose)}
-                />
-              </GroupedList>
-
-              <GroupedList header={t('identifyProcessor')} className="mt-8">
-                <ListRow
-                  title="Governikus GmbH & Co. KG"
-                  subtitle={t('identifyProcessorRole')}
-                />
-              </GroupedList>
-
-              <GroupedList header={t('identifyData')} className="mt-8">
-                {request.data.map((key) => (
+              <GroupedList
+                header={t('personalDataFieldsHeader')}
+                className="mt-8"
+              >
+                {PERSONAL_DATA_FIELDS.map((key) => (
                   <ListRow
                     key={key}
                     title={t(key)}
-                    trailing={<CheckIcon />}
+                    trailing={<SFCheckmark size={18} className="text-ios-primary" aria-hidden />}
                   />
                 ))}
               </GroupedList>
-
-              <p className="mt-[7px] px-8 pb-6 text-[13px] leading-[18px] text-ios-secondary-label">
-                {t('identifyNoStorage')}{' '}
-                <Link
-                  to={routes.privacy}
-                  className="text-ios-primary active:opacity-60"
-                >
-                  {t('identifyPrivacyLink')}
-                </Link>
-              </p>
             </div>
 
             <StickyActions>
               <ActionStack>
                 <IOSButton onClick={() => setStep('scan')}>
-                  {t('identifyContinue')}
+                  {t('personalDataContinue')}
                 </IOSButton>
-                <IOSButton variant="plain" onClick={() => leaveIdentify()}>
+                <IOSButton variant="plain" onClick={leave}>
                   {t('identifyCancel')}
                 </IOSButton>
               </ActionStack>
@@ -153,34 +126,28 @@ export function IdentifyPage() {
           </div>
         )}
 
-        {step === 'done' && (
-          <StatusScreen>
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ios-green">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M8 16.5 13.5 22 24 10"
-                  stroke="white"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+        {step === 'results' && (
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className="min-h-0 flex-1 overflow-y-auto pb-8">
+              <PageIntro
+                title={t('personalDataResultsTitle')}
+                body={t('personalDataResultsBody')}
+              />
+              <GroupedList className="mt-8">
+                {PERSONAL_DATA_FIELDS.map((key) => (
+                  <ListRow
+                    key={key}
+                    title={t(key)}
+                    subtitle={fieldValue(key)}
+                    align="top"
+                  />
+                ))}
+              </GroupedList>
             </div>
-            <h2 className="headline mt-5 text-[22px] font-bold leading-[28px]">
-              {t('successTitle')}
-            </h2>
-            <div className="mt-8 w-full max-w-[320px]">
-              <IOSButton onClick={() => leaveIdentify()}>
-                {t('successDone')}
-              </IOSButton>
-            </div>
-          </StatusScreen>
+            <StickyActions>
+              <IOSButton onClick={leave}>{t('personalDataDone')}</IOSButton>
+            </StickyActions>
+          </div>
         )}
 
         {step === 'failed' && (
@@ -192,9 +159,7 @@ export function IdentifyPage() {
               {t('pinLockedBody')}
             </p>
             <div className="mt-8 w-full max-w-[320px]">
-              <IOSButton onClick={() => leaveIdentify()}>
-                {t('failHome')}
-              </IOSButton>
+              <IOSButton onClick={leave}>{t('failHome')}</IOSButton>
             </div>
           </StatusScreen>
         )}
@@ -209,7 +174,7 @@ export function IdentifyPage() {
         onCancel={() => {
           setSheetOpen(false)
           nfc.cancel()
-          setStep('consent')
+          setStep('intro')
         }}
         onComplete={() => {
           setSheetOpen(false)
@@ -218,8 +183,4 @@ export function IdentifyPage() {
       />
     </div>
   )
-}
-
-function CheckIcon() {
-  return <SFCheckmark size={18} className="text-ios-primary" aria-hidden />
 }

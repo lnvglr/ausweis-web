@@ -21,6 +21,8 @@ type PairingsContextValue = {
   readerReady: boolean
   setReaderReady: (ready: boolean) => void
   primaryDevice: PairedDevice | null
+  /** Restore seed Mac pairing and reader-ready default. */
+  resetPairings: () => void
 }
 
 const PairingsContext = createContext<PairingsContextValue | null>(null)
@@ -58,6 +60,11 @@ export function PairingsProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const resetPairings = useCallback(() => {
+    setDevices(SEED.map((d) => ({ ...d })))
+    setReaderReady(true)
+  }, [])
+
   const primaryDevice = devices[0] ?? null
 
   const value = useMemo(
@@ -68,8 +75,16 @@ export function PairingsProvider({ children }: { children: ReactNode }) {
       readerReady,
       setReaderReady,
       primaryDevice,
+      resetPairings,
     }),
-    [devices, addDevice, removeDevice, readerReady, primaryDevice],
+    [
+      devices,
+      addDevice,
+      removeDevice,
+      readerReady,
+      primaryDevice,
+      resetPairings,
+    ],
   )
 
   return (

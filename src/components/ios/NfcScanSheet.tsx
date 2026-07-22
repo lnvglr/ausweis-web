@@ -28,7 +28,7 @@ type Props = {
 }
 
 const BLUE = '#007AFF'
-const CLOSE_BG = '#F2F2F7'
+const CLOSE_BG = 'var(--color-ios-gray5)'
 
 /**
  * Core NFC sheet — spacing & colors matched to iOS system sheet.
@@ -69,7 +69,7 @@ export function NfcScanSheet({
     <AnimatePresence>
       {open ? (
         <div
-          className="absolute inset-0 z-50 flex items-end justify-center px-4 pb-3 pt-12"
+          className="absolute inset-0 z-50 flex items-end justify-center pt-12"
           role="dialog"
           aria-modal="true"
           aria-labelledby="nfc-sheet-title"
@@ -91,7 +91,7 @@ export function NfcScanSheet({
           />
 
           <motion.div
-            className="relative w-full max-w-[390px] rounded-[var(--radius-ios-sheet)] bg-white px-5 pb-5 pt-7 shadow-[0_16px_48px_rgba(0,0,0,0.28)]"
+            className="relative w-full rounded-t-[var(--radius-ios-sheet)] bg-ios-card px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-7 shadow-[0_-8px_40px_rgba(0,0,0,0.18)]"
             variants={sheetVariants}
             initial="hidden"
             animate="visible"
@@ -113,7 +113,7 @@ export function NfcScanSheet({
               className="absolute right-[18px] top-[18px] flex h-[30px] w-[30px] items-center justify-center rounded-full active:opacity-70"
               style={{ backgroundColor: CLOSE_BG }}
             >
-              <SFXmark size={12} className="text-[#3A3A3C]" aria-hidden />
+              <SFXmark size={12} className="text-ios-secondary-label" aria-hidden />
             </button>
 
             <div className="flex flex-col items-center text-center">
@@ -133,13 +133,13 @@ export function NfcScanSheet({
                   >
                     <h2
                       id="nfc-sheet-title"
-                      className="headline text-[22px] font-bold leading-[28px] text-black"
+                      className="headline text-[22px] font-bold leading-[28px] text-ios-label"
                     >
                       {title}
                     </h2>
                     <p
                       id="nfc-sheet-body"
-                      className="mx-auto mt-2 max-w-[280px] text-[15px] leading-[20px] text-black/55"
+                      className="mx-auto mt-2 max-w-[280px] text-[15px] leading-[20px] text-ios-secondary-label"
                     >
                       {body}
                     </p>
@@ -151,7 +151,7 @@ export function NfcScanSheet({
                 {isBusy ? (
                   <span
                     className={cn(
-                      'absolute inset-[-6px] rounded-full border-[2.5px] border-[#007AFF]/20',
+                      'absolute inset-[-6px] rounded-full border-[2.5px] border-ios-primary/20',
                       state === 'reading' && 'animate-nfc-pulse',
                     )}
                   />
@@ -169,7 +169,7 @@ export function NfcScanSheet({
                   ) : isError ? (
                     <ErrorMark />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center rounded-full border-[6px] border-[#007AFF] bg-white">
+                    <div className="flex h-full w-full items-center justify-center rounded-full border-[6px] border-ios-primary bg-ios-card">
                       <PhoneGlyph reading={state === 'reading'} />
                     </div>
                   )}

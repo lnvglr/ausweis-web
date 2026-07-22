@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from '@/components/ios/AppShell'
+import { DemoDirectorProvider } from '@/context/DemoDirectorContext'
+import { AuthRequestProvider } from '@/context/AuthRequestContext'
 import { PairingsProvider } from '@/context/PairingsContext'
 import { SettingsProvider } from '@/context/SettingsContext'
 import { I18nProvider } from '@/i18n/I18nContext'
@@ -8,6 +10,7 @@ import { CompanionPage } from '@/pages/CompanionPage'
 import { HomePage } from '@/pages/HomePage'
 import { IdentifyPage } from '@/pages/IdentifyPage'
 import { LandingPage } from '@/pages/LandingPage'
+import { PersonalDataPage } from '@/pages/PersonalDataPage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { AppearanceSettingsPage } from '@/pages/settings/AppearanceSettingsPage'
@@ -29,68 +32,75 @@ export default function App() {
     <I18nProvider>
       <SettingsProvider>
         <PairingsProvider>
-          <BrowserRouter
-            basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}
-          >
-            <Routes>
-              <Route index element={<LandingPage />} />
-              <Route path={DEMO.slice(1)} element={<AppShell />}>
-                <Route index element={<HomePage />} />
-                <Route path="identify" element={<IdentifyPage />} />
-                <Route path="privacy" element={<PrivacyPage />} />
-                <Route path="companion" element={<CompanionPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route
-                  path="settings/change-pin"
-                  element={<ChangePinSettingsPage />}
-                />
-                <Route
-                  path="settings/language"
-                  element={<LanguageSettingsPage />}
-                />
-                <Route
-                  path="settings/appearance"
-                  element={<AppearanceSettingsPage />}
-                />
-                <Route
-                  path="settings/reading-mode"
-                  element={<ReadingModeSettingsPage />}
-                />
-                <Route
-                  path="settings/device-check"
-                  element={<DeviceCheckSettingsPage />}
-                />
-                <Route
-                  path="settings/device-name"
-                  element={<DeviceNameSettingsPage />}
-                />
-                <Route
-                  path="settings/pairings"
-                  element={<PairingsSettingsPage />}
-                />
-                <Route path="settings/help" element={<HelpSettingsPage />} />
-                <Route
-                  path="settings/help/general"
-                  element={<HelpGeneralPage />}
-                />
-                <Route path="settings/help/data" element={<HelpDataPage />} />
-                <Route
-                  path="settings/help/information"
-                  element={<HelpInformationPage />}
-                />
-                <Route
-                  path="settings/help/license"
-                  element={<HelpLicensePage />}
-                />
-                <Route
-                  path="settings/help/release-notes"
-                  element={<HelpReleaseNotesPage />}
-                />
-                <Route path="*" element={<Navigate to={DEMO} replace />} />
-              </Route>
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </BrowserRouter>
+          <AuthRequestProvider>
+            <DemoDirectorProvider>
+              <BrowserRouter
+                basename={
+                  import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
+                }
+              >
+              <Routes>
+                <Route index element={<LandingPage />} />
+                <Route path={DEMO.slice(1)} element={<AppShell />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="identify" element={<IdentifyPage />} />
+                  <Route path="personal-data" element={<PersonalDataPage />} />
+                  <Route path="privacy" element={<PrivacyPage />} />
+                  <Route path="companion" element={<CompanionPage />} />
+                  <Route path="settings" element={<SettingsPage />} />
+                  <Route
+                    path="settings/change-pin"
+                    element={<ChangePinSettingsPage />}
+                  />
+                  <Route
+                    path="settings/language"
+                    element={<LanguageSettingsPage />}
+                  />
+                  <Route
+                    path="settings/appearance"
+                    element={<AppearanceSettingsPage />}
+                  />
+                  <Route
+                    path="settings/reading-mode"
+                    element={<ReadingModeSettingsPage />}
+                  />
+                  <Route
+                    path="settings/device-check"
+                    element={<DeviceCheckSettingsPage />}
+                  />
+                  <Route
+                    path="settings/device-name"
+                    element={<DeviceNameSettingsPage />}
+                  />
+                  <Route
+                    path="settings/pairings"
+                    element={<PairingsSettingsPage />}
+                  />
+                  <Route path="settings/help" element={<HelpSettingsPage />} />
+                  <Route
+                    path="settings/help/general"
+                    element={<HelpGeneralPage />}
+                  />
+                  <Route path="settings/help/data" element={<HelpDataPage />} />
+                  <Route
+                    path="settings/help/information"
+                    element={<HelpInformationPage />}
+                  />
+                  <Route
+                    path="settings/help/license"
+                    element={<HelpLicensePage />}
+                  />
+                  <Route
+                    path="settings/help/release-notes"
+                    element={<HelpReleaseNotesPage />}
+                  />
+                  <Route path="*" element={<Navigate to={DEMO} replace />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </BrowserRouter>
+          </DemoDirectorProvider>
+          </AuthRequestProvider>
         </PairingsProvider>
       </SettingsProvider>
     </I18nProvider>

@@ -4,6 +4,7 @@ export const DEMO = '/demo' as const
 export const routes = {
   home: DEMO,
   identify: `${DEMO}/identify`,
+  personalData: `${DEMO}/personal-data`,
   privacy: `${DEMO}/privacy`,
   companion: `${DEMO}/companion`,
   settings: `${DEMO}/settings`,

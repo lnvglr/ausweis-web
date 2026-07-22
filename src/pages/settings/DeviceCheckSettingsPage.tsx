@@ -10,6 +10,7 @@ import {
   StickyActions,
 } from '@/components/ios/PageChrome'
 import { SFCheckmark } from '@/components/ios/SF'
+import { useNfcDemoActions } from '@/hooks/useNfcDemoActions'
 import { useNfcSimulation } from '@/hooks/useNfcSimulation'
 import { useI18n } from '@/i18n/I18nContext'
 
@@ -21,10 +22,8 @@ export function DeviceCheckSettingsPage() {
   const [phase, setPhase] = useState<Phase>('idle')
   const [sheetOpen, setSheetOpen] = useState(false)
 
-  const nfc = useNfcSimulation({
-    open: sheetOpen,
-    moveAwayChance: 0.08,
-  })
+  const nfc = useNfcSimulation({ open: sheetOpen })
+  useNfcDemoActions(sheetOpen, nfc.state, nfc)
 
   const nfcCopy = useMemo(() => {
     switch (nfc.state) {

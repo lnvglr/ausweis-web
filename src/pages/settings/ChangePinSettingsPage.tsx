@@ -10,6 +10,7 @@ import {
 } from '@/components/ios/PageChrome'
 import { PinPad } from '@/components/ios/PinPad'
 import { SFCheckmark, SFNosign } from '@/components/ios/SF'
+import { useDemoPinHint } from '@/context/DemoDirectorContext'
 import { useSettings } from '@/context/SettingsContext'
 import { useI18n } from '@/i18n/I18nContext'
 import { cn } from '@/lib/cn'
@@ -36,8 +37,18 @@ export function ChangePinSettingsPage() {
   const expectedCurrent =
     kind === 'transport' ? DEMO_TRANSPORT_PIN : cardPin
 
+  const demoHint =
+    step === 'current' && kind === 'transport'
+      ? t('demoTransportPinHint', { pin: DEMO_TRANSPORT_PIN })
+      : step === 'current'
+        ? t('demoPinHint', { pin: cardPin })
+        : null
+
+  useDemoPinHint(demoHint)
+
   const resetEntry = () => {
     setValue('')
+
     setError(false)
   }
 
@@ -268,13 +279,6 @@ export function ChangePinSettingsPage() {
     )
   }
 
-  const demoHint =
-    step === 'current' && kind === 'transport'
-      ? t('demoTransportPinHint', { pin: DEMO_TRANSPORT_PIN })
-      : step === 'current'
-        ? t('demoPinHint', { pin: cardPin })
-        : null
-
   return (
     <div className="relative flex min-h-0 flex-1 flex-col bg-ios-grouped">
       <ScreenTopBar
@@ -317,13 +321,7 @@ export function ChangePinSettingsPage() {
           </div>
         </div>
 
-        <div className="safe-bottom flex min-h-[18px] items-center justify-center pb-5 pt-3">
-          {demoHint ? (
-            <p className="text-center text-[13px] leading-[18px] text-ios-tertiary-label">
-              {demoHint}
-            </p>
-          ) : null}
-        </div>
+        <div className="safe-bottom min-h-[18px] pb-5 pt-3" />
       </div>
     </div>
   )
