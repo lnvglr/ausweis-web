@@ -5,6 +5,7 @@
 export { SFWave3RightCircleFill } from 'sf-symbols-lib/monochrome/SFWave3RightCircleFill'
 export { SFWave3Right } from 'sf-symbols-lib/monochrome/SFWave3Right'
 export { SFAlignHorizontalCenter } from 'sf-symbols-lib/monochrome/SFAlignHorizontalCenter'
+export { SFBolt } from 'sf-symbols-lib/monochrome/SFBolt'
 export { SFBuilding2 } from 'sf-symbols-lib/monochrome/SFBuilding2'
 export { SFBuildingColumns } from 'sf-symbols-lib/monochrome/SFBuildingColumns'
 export { SFCheckmark } from 'sf-symbols-lib/monochrome/SFCheckmark'
