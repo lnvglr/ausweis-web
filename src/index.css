@@ -310,6 +310,17 @@ h3,
   padding-bottom: max(var(--iphone-17-safe-bottom), env(safe-area-inset-bottom));
 }
 
+/* Full-bleed mobile demo — use the device’s real safe areas, no frame radius. */
+.demo-fullscreen {
+  --iphone-17-safe-top: env(safe-area-inset-top, 0px);
+  --iphone-17-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --iphone-17-radius: 0px;
+  /* TabBar: pt-2 + glass pill (~3.75rem) + safe-area bottom. */
+  --demo-tab-stack: calc(
+    0.5rem + 3.75rem + max(var(--iphone-17-safe-bottom), env(safe-area-inset-bottom, 0px))
+  );
+}
+
 /* iOS 26 Liquid Glass — chrome / controls layer */
 .ios-glass {
   background:
